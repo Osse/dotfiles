@@ -1,0 +1,7 @@
+set show-all-if-ambiguous on
+set editing-mode vi
+
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+"M-.":yank-last-arg
+"\C-w":backward-kill-word

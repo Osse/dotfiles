@@ -1,0 +1,17 @@
+[user]
+    name = Øystein Walle
+    email = oystwa@gmail.com
+[color]
+    ui = auto
+    tool = vimdiff
+[diff]
+    tool = vimdiff
+[core]
+    editor = gvim -f
+    excludesfile = /home/osse/.gitignore
+[alias]
+    ci = commit
+    st = status
+    co = checkout
+    br = branch
+    fuckit = reset --hard
