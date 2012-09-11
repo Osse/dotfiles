@@ -3,11 +3,12 @@
     email = oystwa@gmail.com
 [color]
     ui = auto
+[merge]
     tool = vimdiff
 [diff]
     tool = vimdiff
 [core]
-    editor = gvim -f
+    editor = vim
     excludesfile = /home/osse/.gitignore
 [alias]
     ci = commit
@@ -15,3 +16,5 @@
     co = checkout
     br = branch
     fuckit = reset --hard
+    lg = log --graph --decorate --all --oneline --date-order
+    sdiff = diff --staged
