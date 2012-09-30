@@ -103,7 +103,7 @@ function disambiguate() {
     fi
 
     for cur ($split[1,-2]) {
-      while { 
+      while {
                part+=$cur[1]
                cur=$cur[2,-1]
                local -a a
@@ -124,7 +124,7 @@ function disambiguate() {
 
 function chpwd() {
     local REPLY
-    disambiguate 
+    disambiguate
     psvar[1]=$REPLY
 }
 chpwd
@@ -248,6 +248,10 @@ function osse-backward-kill-word {
 }
 zle -N osse-backward-kill-word
 
+function copy() {
+    fc -ln -1 | sed -e 's|\\n|;|g' |
+    tr -d '\n' | xsel -b
+}
 # }}}
 
 if [[ -f "$HOME/.zshrc.local" ]] then
