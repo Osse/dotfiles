@@ -40,10 +40,8 @@ setopt append_history    \
 
 # TERM {{{
 # This is apparently a mad thing, but gnome-terminal :(
-if [ -z $TMUX ]; then
-    export TERM="xterm-256color"
-else
-    export TERM="screen-256color"
+if [[ $TERM = xterm* ]]; then
+     export TERM="xterm-256color"
 fi
 # }}}
 
