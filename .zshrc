@@ -189,7 +189,7 @@ alias ll='ls -alF'
 alias ls='ls --color=auto'
 alias q='exit'
 alias vimrc='vim ~/.vimrc'
-alias zshrc='zsh ~/.zshrc'
+alias zshrc='vim ~/.zshrc'
 # }}}
 
 #  Mode indication {{{
