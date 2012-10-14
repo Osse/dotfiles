@@ -171,8 +171,8 @@ bindkey '^W' osse-backward-kill-word
                                bindkey -M vicmd "$terminfo[kend]" end-of-line
 [[ -z "$terminfo[kdch1]" ]] || bindkey -M viins "$terminfo[kdch1]" vi-delete-char &&
                                bindkey -M vicmd "$terminfo[kdch1]" vi-delete-char
-[[ -z "$terminfo[kpp]"   ]] || bindkey -M vicmd -s "$terminfo[kpp]" ''
-[[ -z "$terminfo[knp]"   ]] || bindkey -M vicmd -s "$terminfo[knp]" ''
+[[ -z "$terminfo[kpp]"   ]] || bindkey -M viins -s "$terminfo[kpp]" ''
+[[ -z "$terminfo[knp]"   ]] || bindkey -M viins -s "$terminfo[knp]" ''
 # }}}
 
 # Aliases {{{
