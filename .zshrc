@@ -143,11 +143,6 @@ esac
 PS1="%B%F{green}%n%f@%F{$hostcolor}%m%f:%F{blue}%1v%b"'${vcs_info_msg_0_}'"%f%b%(?..%F{red})$%f%b "
 # }}}
 
-# Environment variables{{{
-export SUDO_EDITOR=vim
-export EDITOR=vim
-# }}}
-
 # Keybindings {{{
 bindkey -v
 
