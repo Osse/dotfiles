@@ -50,7 +50,6 @@ fi
 # Git prompt {{{
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' actionformats '%F{72}[%b%c%u%F{72}]%f YAAY'
 zstyle ':vcs_info:*' formats '%F{72}[%b%c%u%F{72}]%f'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{40}•%f'
