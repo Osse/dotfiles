@@ -55,16 +55,16 @@ zstyle ':vcs_info:*' formats '%F{72}[%b%c%u%F{72}]%f'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{40}•%f'
 zstyle ':vcs_info:*' unstagedstr '%F{214}•%f'
-zstyle ':vcs_info:*:'        formats '%F{72}[%b%c%u%F{72}]%f'
-zstyle ':vcs_info:*:dirty:*' formats '%F{72}[%b%c%u%F{red}•%F{72}]%f'
+zstyle ':vcs_info:git+set-message:*' hooks check-untracked
+
++vi-check-untracked() {
+    [[ -n $(git ls-files --others --exclude-standard 2>&-) ]] &&
+    hook_com[unstaged]="${hook_com[unstaged]}%F{red}•"
+}
 # }}}
 
 function precmd() {
-    if [[ -z $(git ls-files --others --exclude-standard 2> /dev/null) ]] {
-        vcs_info
-    } else {
-        vcs_info dirty
-    }
+    vcs_info
 }
 
 function disambiguate() {
