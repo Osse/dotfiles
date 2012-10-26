@@ -171,8 +171,6 @@ bindkey '^W' osse-backward-kill-word
 
 # Aliases {{{
 alias -g L='| less'
-alias -g MK='$(mktemp)'
-alias -g MKD='$(mktemp -d)'
 alias -g N1='> /dev/null'
 alias -g N2='2> /dev/null'
 alias -g N='> /dev/null 2>&1'
@@ -231,6 +229,22 @@ function togglegit {
 
 function :he :h :help {
     vim +":he $1" +'wincmd o' +'nnoremap q :q!<CR>'
+}
+
+function tempd() {
+    tempdir=$(mktemp -d)
+    echo "\$tempdir set to $tempdir"
+    cd $tempdir
+}
+
+function tempf() {
+    if [[ -n $1 ]]; then
+        tempfile=$(mktemp --suffix=.$1)
+    else
+        tempfile=$(mktemp)
+    fi
+    echo "\$tempfile set to $tempfile"
+    vim $tempfile
 }
 
 function mkcd() {
