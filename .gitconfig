@@ -2,8 +2,6 @@
     name = Øystein Walle
 [color]
     ui = auto
-[merge]
-    tool = vimdiff
 [diff]
     tool = vimdiff
 [core]
