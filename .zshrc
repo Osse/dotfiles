@@ -263,6 +263,11 @@ function copy() {
     fc -ln -1 | sed -e 's|\\n|;|g' |
     tr -d '\n' | xsel -b
 }
+
+function sprunge() {
+    curl -sF 'sprunge=<-' http://sprunge.us | tr -d '\n'
+    echo $output${1:+\?$1}
+}
 # }}}
 
 if [[ -f "$HOME/.zshrc.local" ]] then
