@@ -127,12 +127,10 @@ function chpwd() {
 chpwd
 
 case $HOST in
-    osse-w760)
+    osse-w760|ow-linux)
         [[ -z $SSH_CONNECTION ]] &&
             hostcolor=green ||
             hostcolor=yellow ;;
-    ow-linux)
-        hostcolor=green ;;
     laleh)
         hostcolor=yellow ;;
     ow-server)
