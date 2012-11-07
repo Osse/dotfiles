@@ -249,6 +249,10 @@ function mkcd() {
     [[ ! -z $1 ]] && mkdir $1 && cd $1
 }
 
+function mvcd() {
+    (( $# > 1 )) && mv "$@" && cd "$@[-1]"
+}
+
 function _users() {}
 
 function osse-backward-kill-word {
