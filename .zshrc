@@ -107,6 +107,8 @@ bindkey '\e[B' history-beginning-search-forward
 bindkey '\e[Z' reverse-menu-complete
 bindkey '^R' history-incremental-search-backward
 bindkey '^W' osse-backward-kill-word
+bindkey '^H' backward-delete-char
+bindkey '^?' backward-delete-char
 
 [[ -z "$terminfo[khome]" ]] || bindkey -M viins "$terminfo[khome]" beginning-of-line &&
                                bindkey -M vicmd "$terminfo[khome]" beginning-of-line
