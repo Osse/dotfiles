@@ -1,0 +1,5 @@
+tempdir=$(mktemp -d)
+echo "\$tempdir set to $tempdir"
+cd $tempdir
+
+# vim: ft=zsh

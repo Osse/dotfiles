@@ -1,0 +1,10 @@
+if [[ -d "$HOME/.git" && ! -d "$HOME/.git.off" ]]; then
+    mv "$HOME/.git" "$HOME/.git.off"
+elif [[ ! -d "$HOME/.git" && -d "$HOME/.git.off" ]]; then
+    mv "$HOME/.git.off" "$HOME/.git"
+else
+    echo "pleasefix" >&2
+    return 1
+fi
+
+# vim: ft=zsh

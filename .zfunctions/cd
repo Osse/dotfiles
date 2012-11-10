@@ -1,0 +1,15 @@
+if [[ -z $2 ]]; then
+    if [[ -f $1 ]]; then
+        builtin cd $1:h
+    else
+        builtin cd $1
+    fi
+else
+    if [[ -z $3 ]]; then
+        builtin cd $1 $2
+    else
+        echo cd: too many arguments
+    fi
+fi
+
+# vim: ft=zsh

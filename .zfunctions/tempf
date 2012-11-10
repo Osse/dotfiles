@@ -1,0 +1,9 @@
+if [[ -n $1 ]]; then
+    tempfile=$(mktemp --suffix=.$1)
+else
+    tempfile=$(mktemp)
+fi
+echo "\$tempfile set to $tempfile"
+vim $tempfile
+
+# vim: ft=zsh
