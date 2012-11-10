@@ -100,13 +100,17 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
+# '^W' fix
+autoload -U osse-backward-kill-word
+zle -N osse-backward-kill-word
+bindkey '^W' osse-backward-kill-word
+
 # Neeeesten perfekt
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
 bindkey '\e[Z' reverse-menu-complete
 bindkey '^R' history-incremental-search-backward
-bindkey '^W' osse-backward-kill-word
 bindkey '^H' backward-delete-char
 bindkey '^?' backward-delete-char
 
@@ -165,12 +169,6 @@ function mvcd() {
 }
 
 function _users() {}
-
-function osse-backward-kill-word {
-    zle vi-backward-word
-    zle vi-change-eol
-}
-zle -N osse-backward-kill-word
 
 function copy() {
     fc -ln -1 | sed -e 's|\\n|;|g' |
