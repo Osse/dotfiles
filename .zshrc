@@ -16,6 +16,7 @@ zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' prompt 'Errors: %e'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' verbose true
+zstyle ':completion::complete:-tilde-::' tag-order '! users'
 
 autoload -U compinit
 compinit -i
@@ -167,8 +168,6 @@ function mkcd() {
 function mvcd() {
     (( $# > 1 )) && mv "$@" && cd "$@[-1]"
 }
-
-function _users() {}
 
 function copy() {
     fc -ln -1 | sed -e 's|\\n|;|g' |
