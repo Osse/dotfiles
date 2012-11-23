@@ -1,0 +1,9 @@
+if [[ $@[-1] = ft=* ]]
+then
+    ft=${@[-1]#ft=}
+    command vim "$@[1,-2]" -c "set ft=$ft"
+else
+    command vim "$@"
+fi
+
+# vim: ft=zsh
