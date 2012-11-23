@@ -1,0 +1,8 @@
+if (( ${#@} == 1 ))
+then
+    command man $1
+else
+    command man --pager="pager -s -p ${(q)*[2,-1]}" $1
+fi
+
+# vim: ft=zsh
