@@ -1,8 +1,13 @@
+if [[ $1 =~ '[0-9]' ]]
+then
+    local section=$1
+    shift
+fi
 if (( ${#@} == 1 ))
 then
-    command man $1
+    command man $section $1
 else
-    command man --pager="pager -s -p ${(q)*[2,-1]}" $1
+    command man --pager="pager -s -p ${(q)*[2,-1]}" $section $1
 fi
 
 # vim: ft=zsh
