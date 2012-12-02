@@ -4,6 +4,7 @@ else
     tempfile=$(mktemp)
 fi
 echo "\$tempfile set to $tempfile"
-vim $tempfile
+echo "Open file in Vim? y/n"
+read -q answer && vim $tempfile || return 0
 
 # vim: ft=zsh
