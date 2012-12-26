@@ -13,5 +13,5 @@
     co = checkout
     br = branch
     fuckit = reset --hard
-    lg = log --graph --decorate --all --oneline --date-order
+    lg = log --graph --decorate --branches --oneline --date-order
     sdiff = diff --staged
