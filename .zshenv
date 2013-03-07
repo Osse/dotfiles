@@ -5,7 +5,7 @@ export SUDO_EDITOR=vim
 export EDITOR=vim
 
 # Add stuff to PATH
-path=( /home/osse/bin $path )
+path=( $HOME/bin $path )
 typeset -U path
 
 # Local modifications
