@@ -7,7 +7,7 @@ if (( ${#@} == 1 ))
 then
     command man $section $1
 else
-    command man --pager="pager -s -p ${(q)*[2,-1]}" $section $1
+    command man --pager="less -s -p ${(q)*[2,-1]}" $section $1
 fi
 
 # vim: ft=zsh
