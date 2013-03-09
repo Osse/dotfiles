@@ -25,8 +25,8 @@ compdef -d users
 
 # History {{{
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 # }}}
 
 # Options {{{
