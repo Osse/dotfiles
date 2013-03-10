@@ -14,4 +14,5 @@
     br = branch
     fuckit = reset --hard
     lg = log --graph --decorate --branches --oneline --date-order
+    lgg = log --graph --decorate --all --oneline --date-order
     sdiff = diff --staged
