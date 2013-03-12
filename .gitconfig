@@ -7,13 +7,15 @@
 [core]
     editor = vim
     excludesfile = /home/osse/.gitignore
+[log]
+    decorate = true
 [alias]
     ci = commit
     st = status
     co = checkout
     br = branch
     fuckit = reset --hard
-    lg = log --graph --decorate --branches --oneline --date-order
-    lgg = log --graph --decorate --all --oneline --date-order
+    lg = log --graph --branches --oneline --date-order
+    lgg = log --graph --all --oneline --date-order
     sdiff = diff --staged
     amend = commit --amend -C HEAD
