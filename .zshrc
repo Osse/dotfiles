@@ -88,6 +88,8 @@ case $HOST in
         hostcolor=yellow ;;
     ow-server)
         hostcolor=magenta ;;
+    bigge)
+        hostcolor=215 ;;
     *)
         hostcolor=white ;;
 esac
