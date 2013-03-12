@@ -16,3 +16,4 @@
     lg = log --graph --decorate --branches --oneline --date-order
     lgg = log --graph --decorate --all --oneline --date-order
     sdiff = diff --staged
+    amend = commit --amend -C HEAD
