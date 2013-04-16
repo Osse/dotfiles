@@ -19,3 +19,5 @@
 	lgg = log --graph --all --oneline --date-order
 	sdiff = diff --staged
 	amend = commit --amend -C HEAD
+[push]
+	default = upstream
