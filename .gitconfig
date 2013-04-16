@@ -1,21 +1,21 @@
 [user]
-    name = Øystein Walle
+	name = Øystein Walle
 [color]
-    ui = auto
+	ui = auto
 [diff]
-    tool = vimdiff
+	tool = vimdiff
 [core]
-    editor = vim
-    excludesfile = /home/osse/.gitignore
+	editor = vim
+	excludesfile = /home/osse/.gitignore
 [log]
-    decorate = true
+	decorate = true
 [alias]
-    ci = commit
-    st = status
-    co = checkout
-    br = branch
-    fuckit = reset --hard
-    lg = log --graph --branches --oneline --date-order
-    lgg = log --graph --all --oneline --date-order
-    sdiff = diff --staged
-    amend = commit --amend -C HEAD
+	ci = commit
+	st = status
+	co = checkout
+	br = branch
+	fuckit = reset --hard
+	lg = log --graph --branches --oneline --date-order
+	lgg = log --graph --all --oneline --date-order
+	sdiff = diff --staged
+	amend = commit --amend -C HEAD
