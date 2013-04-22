@@ -185,9 +185,5 @@ function sprunge() {
 }
 # }}}
 
-if [[ -f "$HOME/.zshrc.local" ]] then
-    source "$HOME/.zshrc.local"
-fi
-
 # vim: foldmethod=marker foldlevel=0
 
