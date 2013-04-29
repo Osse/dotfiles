@@ -1,0 +1,3 @@
+command man --pager="less -s -p '^ *$1 '" zshbuiltins
+
+# vim: ft=zsh
