@@ -136,7 +136,6 @@ alias -g N='> /dev/null 2>&1'
 alias -g XS=' $(xsel)'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-alias fixlink='cd `readlink -nf .`'
 alias fullname='readlink -f'
 alias g=git
 alias grep='grep --color=auto'
