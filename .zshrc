@@ -139,6 +139,7 @@ alias fgrep='fgrep --color=auto'
 alias fullname='readlink -f'
 alias g=git
 alias grep='grep --color=auto'
+alias help='run-help'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
