@@ -18,6 +18,7 @@
 	fuckit = reset --hard
 	lg = log --graph --branches --oneline --date-order
 	lgg = log --graph --all --oneline --date-order
+	lgup = log --graph --oneline --date-order HEAD @{u}
 	sdiff = diff --staged
 	amend = commit --amend -C HEAD
 [push]
