@@ -22,3 +22,8 @@
 	amend = commit --amend -C HEAD
 [push]
 	default = upstream
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = oystwa@gmail.com
+	smtpserverport = 587
