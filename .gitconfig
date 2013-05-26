@@ -21,6 +21,7 @@
 	lgup = log --graph --oneline --date-order HEAD @{u}
 	sdiff = diff --staged
 	amend = commit --amend -C HEAD
+	rcont = rebase --continue
 [push]
 	default = upstream
 [sendemail]
