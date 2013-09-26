@@ -1,14 +1,14 @@
-if [[ -z $2 ]]; then
+if (( $+2 )); then
+    if (( $+3 )); then
+        echo cd: too many arguments >&2
+    else
+        builtin cd $1 "$2"
+    fi
+else
     if [[ -f $1 ]]; then
         builtin cd $1:h
     else
         builtin cd $1
-    fi
-else
-    if [[ -z $3 ]]; then
-        builtin cd $1 $2
-    else
-        echo cd: too many arguments
     fi
 fi
 
