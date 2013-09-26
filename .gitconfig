@@ -24,6 +24,7 @@
 	sdiff = diff --staged
 	amend = commit --amend -C HEAD
 	rcont = rebase --continue
+	dirdiff = difftool --tool vdwrap --dir-diff
 [push]
 	default = upstream
 [sendemail]
@@ -31,3 +32,5 @@
 	smtpserver = smtp.gmail.com
 	smtpuser = oystwa@gmail.com
 	smtpserverport = 587
+[difftool "vdwrap"]
+	cmd = vdwrap $LOCAL $REMOTE
