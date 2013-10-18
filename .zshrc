@@ -114,7 +114,7 @@ bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
 bindkey '\e[Z' reverse-menu-complete
-bindkey '^R' history-incremental-search-backward
+bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^H' backward-delete-char
 bindkey '^?' backward-delete-char
 
