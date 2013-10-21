@@ -6,7 +6,7 @@
 [diff]
 	tool = vimdiff
 [core]
-	editor = vim
+	editor = vim </dev/tty
 	excludesfile = /home/osse/.gitignore
 	pager = less -FSRX
 [log]
