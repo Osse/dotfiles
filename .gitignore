@@ -1,3 +1,5 @@
 # To ignore helptags files in vim
 doc/tags
 .netrwhist
+.lvimrc
+*.sw?
