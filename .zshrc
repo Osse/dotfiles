@@ -146,6 +146,7 @@ alias ll='ls -al'
 alias ls='ls --color=auto'
 alias man='noglob man'
 alias q='exit'
+alias v='vim'
 alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
 # }}}
