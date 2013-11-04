@@ -134,16 +134,12 @@ alias -g N1='> /dev/null'
 alias -g N2='2> /dev/null'
 alias -g N='> /dev/null 2>&1'
 alias -g XS=' $(xsel)'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
 alias fullname='readlink -f'
 alias g=git
-alias grep='grep --color=auto'
 alias help='run-help'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -al'
-alias ls='ls --color=auto'
 alias man='noglob man'
 alias q='exit'
 alias v='vim'
@@ -162,6 +158,10 @@ zle -N zle-keymap-select
 # }}}
 
 # Other functions {{{
+
+function ls grep egrep fgrep {
+    command $0 --color=auto "$@"
+}
 
 function :he :h :help {
     vim +":he $1" +'wincmd o' +'nnoremap q :q!<CR>'
