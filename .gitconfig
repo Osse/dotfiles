@@ -16,6 +16,7 @@
 	st = status
 	s = status
 	d = diff
+	sd = diff --staged
 	co = checkout
 	br = branch
 	fuckit = reset --hard
