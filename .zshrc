@@ -182,7 +182,7 @@ function copy() {
 
 function sprunge() {
     curl -sF 'sprunge=<-' http://sprunge.us | tr -d '\n'
-    echo $output${1:+\?$1}
+    echo ${1:+\?$1}
 }
 # }}}
 
