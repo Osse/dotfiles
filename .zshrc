@@ -164,7 +164,7 @@ function ls grep egrep fgrep {
 }
 
 function :he :h :help {
-    vim +":he $1" +'wincmd o' +'nnoremap q :q!<CR>'
+    vim +"help $1" +only +'map q ZQ'
 }
 
 function mkcd() {
