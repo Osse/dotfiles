@@ -35,3 +35,5 @@
 	smtpserverport = 587
 [difftool "vdwrap"]
 	cmd = vdwrap $LOCAL $REMOTE
+[merge]
+	defaultToUpstream = true
