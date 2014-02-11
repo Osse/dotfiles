@@ -108,6 +108,8 @@ bindkey -M vicmd v edit-command-line
 autoload -U osse-backward-kill-word
 zle -N osse-backward-kill-word
 bindkey '^W' osse-backward-kill-word
+zle -N rationalise-dot
+bindkey '.' rationalise-dot
 
 # Neeeesten perfekt
 bindkey '\e[A' history-beginning-search-backward
