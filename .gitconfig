@@ -38,3 +38,5 @@
 	cmd = vdwrap $LOCAL $REMOTE
 [merge]
 	defaultToUpstream = true
+[pager]
+	status = true
