@@ -3,3 +3,6 @@ doc/tags
 .netrwhist
 .lvimrc
 *.sw?
+.gdb*
+tags
+cscope.out
