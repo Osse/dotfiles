@@ -41,8 +41,8 @@ setopt append_history    \
 
 # TERM {{{
 # This is apparently a mad thing, but gnome-terminal :(
-if [[ $TERM = xterm* ]]; then
-     export TERM="xterm-256color"
+if [[ $TERM = xterm ]]; then
+     TERM="xterm-256color"
 fi
 # }}}
 
