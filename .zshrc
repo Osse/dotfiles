@@ -105,7 +105,6 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
 # '^W' fix
-autoload -U osse-backward-kill-word
 zle -N osse-backward-kill-word
 bindkey '^W' osse-backward-kill-word
 zle -N rationalise-dot
