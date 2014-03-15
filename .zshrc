@@ -111,17 +111,8 @@ bindkey '^W' osse-backward-kill-word
 zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
-# Neeeesten perfekt
-bindkey '\e[A' history-beginning-search-backward
-bindkey '\e[B' history-beginning-search-forward
-
-bindkey '\e[Z' reverse-menu-complete
+bindkey $terminfo[cbt] reverse-menu-complete
 bindkey '^R' history-incremental-pattern-search-backward
-bindkey '^H' backward-delete-char
-bindkey '^?' backward-delete-char
-
-[[ -z "$terminfo[kpp]"   ]] || bindkey -M viins -s "$terminfo[kpp]" ''
-[[ -z "$terminfo[knp]"   ]] || bindkey -M viins -s "$terminfo[knp]" ''
 
 # Code for sane binding of keys and handling of terminal modes {{{
 # Adapted from Debian's /etc/zshrc
@@ -170,12 +161,14 @@ bind2maps emacs viins       -- Insert      overwrite-mode
 bind2maps             vicmd -- Insert      vi-insert
 bind2maps emacs             -- Delete      delete-char
 bind2maps       viins vicmd -- Delete      vi-delete-char
-bind2maps emacs viins vicmd -- Up          up-line-or-history
-bind2maps emacs viins vicmd -- Down        down-line-or-history
+bind2maps emacs viins vicmd -- Up          history-beginning-search-backward
+bind2maps emacs viins vicmd -- Down        history-beginning-search-forward
 bind2maps emacs             -- Left        backward-char
 bind2maps       viins vicmd -- Left        vi-backward-char
 bind2maps emacs             -- Right       forward-char
 bind2maps       viins vicmd -- Right       vi-forward-char
+bind2maps       viins vicmd -- PageUp      ''
+bind2maps       viins vicmd -- PageDown    ''
 
 # Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
