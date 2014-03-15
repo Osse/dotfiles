@@ -173,7 +173,7 @@ bind2maps       viins vicmd -- PageDown    ''
 # Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-line-init () {
+    function zle-line-init-1 () {
         emulate -L zsh
         printf '%s' ${terminfo[smkx]}
     }
@@ -181,9 +181,11 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
         emulate -L zsh
         printf '%s' ${terminfo[rmkx]}
     }
-    zle -N zle-line-init
     zle -N zle-line-finish
 else
+    function zle-line-init-1 () {
+        :
+    }
     for i in {s,r}mkx; do
         (( ${+terminfo[$i]} )) || debian_missing_features+=($i)
     done
@@ -214,14 +216,20 @@ alias zshrc='vim ~/.zshrc'
 # }}}
 
 #  Mode indication {{{
-function zle-line-init zle-keymap-select {
+function zle-line-init-2 zle-keymap-select {
     RPS1="%B${${KEYMAP/vicmd/n}/(main|viins)/i}%b"
     RPS2=$RPS1
     zle reset-prompt
 }
-zle -N zle-line-init
 zle -N zle-keymap-select
 # }}}
+
+# Create zle-line-init
+function zle-line-init {
+    zle-line-init-1
+    zle-line-init-2
+}
+zle -N zle-line-init
 
 # Other functions {{{
 
