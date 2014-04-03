@@ -84,14 +84,13 @@ case $HOST in
         [[ -z $SSH_CONNECTION ]] &&
             hostcolor=green ||
             hostcolor=yellow ;;
-    laleh)
-        hostcolor=yellow ;;
-    ow-server)
-        hostcolor=magenta ;;
     bigge)
         hostcolor=215 ;;
     *)
-        hostcolor=white ;;
+        hash=$(sha1sum <<< "$HOST")
+        hash=$hash[1,10]
+        hostcolor=$(( 0x$hash % 209 + 22 ))
+        ;;
 esac
 PS1='%B%F{green}%n%f@%F{$hostcolor}%m%f:%F{blue}%1v%b${vcs_info_msg_0_}%f%(?..%F{red})$%f '
 # }}}
