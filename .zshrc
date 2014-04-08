@@ -109,7 +109,7 @@ bindkey '^W' osse-backward-kill-word
 zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
-bindkey $terminfo[cbt] reverse-menu-complete
+(( $+terminfo[cbt] )) && bindkey $terminfo[cbt] reverse-menu-complete
 bindkey '^R' history-incremental-pattern-search-backward
 
 # Code for sane binding of keys and handling of terminal modes {{{
