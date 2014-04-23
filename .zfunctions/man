@@ -3,11 +3,11 @@ then
     local section=$1
     shift
 fi
-if (( ${#@} == 1 ))
+if (( $# == 1 ))
 then
     command man $section $1
 else
-    command man --pager="less -s -p ${(q)*[2,-1]}" $section $1
+    command man --pager="less -s -p '${*[2,-1]}'" $section $1
 fi
 
 # vim: ft=zsh
