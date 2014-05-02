@@ -209,7 +209,7 @@ alias ll='ls -al'
 alias man='noglob man'
 alias q='exit'
 alias v='vim'
-alias vimrc='vim ~/.vimrc'
+alias vimrc='vim ~/.vim/vimrc'
 alias zshrc='vim ~/.zshrc'
 # }}}
 
