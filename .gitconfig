@@ -27,7 +27,7 @@
 	rcont = rebase --continue
 	dirdiff = difftool --tool vdwrap --dir-diff
 [push]
-	default = upstream
+	default = simple
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
