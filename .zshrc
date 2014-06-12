@@ -6,6 +6,7 @@ zstyle ':completion:*' format '%BCompleting %d%b'
 zstyle ':completion:*' glob 1
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' ignore-parents parent pwd
+zstyle ':completion:*' special-dirs ..
 eval "$(dircolors -b)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
