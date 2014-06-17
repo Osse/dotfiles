@@ -37,5 +37,6 @@
 	cmd = vdwrap $LOCAL $REMOTE
 [merge]
 	defaultToUpstream = true
+	tool = vimdiff
 [pager]
 	status = true
