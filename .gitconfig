@@ -26,6 +26,7 @@
 	amend = commit --amend -C HEAD
 	rcont = rebase --continue
 	dirdiff = difftool --tool vdwrap --dir-diff
+	reword = commit --amend
 [push]
 	default = simple
 [sendemail]
