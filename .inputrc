@@ -1,6 +1,7 @@
 $include /etc/inputrc
 set show-all-if-ambiguous on
 set editing-mode vi
+set colored-stats on
 
 "\e[A":history-search-backward
 "\e[B":history-search-forward
