@@ -223,6 +223,7 @@ alias zshrc='vim ~/.zshrc'
 function zle-line-init-2 zle-keymap-select {
     RPS1="%B${${KEYMAP/vicmd/n}/(main|viins)/i}%b"
     RPS2=$RPS1
+    zle reset-prompt
 }
 zle -N zle-keymap-select
 # }}}
@@ -231,7 +232,6 @@ zle -N zle-keymap-select
 function zle-line-init {
     zle-line-init-1
     zle-line-init-2
-    zle reset-prompt
 }
 zle -N zle-line-init
 
