@@ -12,6 +12,7 @@
 	decorate = true
 [alias]
 	ci = commit
+	cim = "!git commit -m \"$*\" && :"
 	st = status
 	s = status
 	d = diff
