@@ -28,6 +28,7 @@
 	rcont = rebase --continue
 	dirdiff = difftool --tool vdwrap --dir-diff
 	reword = commit --amend
+	dump = "!git archive \"$1\" | tar -xf - -C \"${2:-.}\" && :"
 [push]
 	default = simple
 [sendemail]
