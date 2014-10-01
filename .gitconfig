@@ -11,6 +11,7 @@
 [log]
 	decorate = true
 [alias]
+	a = add
 	ci = commit
 	cim = "!git commit -m \"$*\" && :"
 	st = status
