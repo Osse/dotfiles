@@ -262,3 +262,4 @@ function sprunge() {
 
 # vim: foldmethod=marker foldlevel=0
 
+lol
