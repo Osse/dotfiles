@@ -1,0 +1,50 @@
+if (( $#@ )); then
+    files=( $@ )
+elif [[ ! -t 0 ]]; then
+    while IFS= read -d ''; do
+        files+=( $REPLY )
+    done
+else
+    files=( *(.) )
+fi
+
+print -nP '%B'
+print -c $files 
+echo
+print -c 'v: Vim' 'l: less' 'h: head' 'n: next' '[yd]: delete' 'D: delete all' 'q: quit'
+print -P '%b'
+
+prompt() {
+    local x
+    read -q 'x?'"${(%):-%B$1%b}"
+}
+
+nukes=()
+
+for f in $files; do
+    read -k 1 "action?$f: "
+    echo
+    case $action in
+        v) vim $f                     ;;
+        l) less $f                    ;;
+        h) head $f                    ;;
+        [yd]) nukes+=($f); continue   ;;
+	D) nukes=( $files ); continue ;;
+        n) continue                   ;;
+        q) return 1                   ;;
+        *) :                          ;;
+    esac
+    prompt 'Delete? ' && nukes+=($f)
+    echo
+done
+
+echo
+
+if (( $#nukes )); then
+    print -Pl '%BTo be deleted:' '' $nukes '%b'
+    prompt 'Really? ' && rm -- $nukes
+else
+    print 'Nothing to be deleted'
+fi
+
+# vim: ft=zsh
