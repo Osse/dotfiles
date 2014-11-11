@@ -7,7 +7,6 @@ elif [[ ! -t 0 ]]; then
 else
     files=( *(.) )
 fi
-
 print -nP '%B'
 print -c $files 
 echo

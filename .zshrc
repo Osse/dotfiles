@@ -225,7 +225,7 @@ zle -N zle-keymap-select
 
 # Create zle-line-init
 function zle-line-init {
-    zle-line-init-1
+	zle-line-init-1
     zle-line-init-2
     zle reset-prompt
 }
