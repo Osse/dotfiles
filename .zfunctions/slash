@@ -1,0 +1,8 @@
+lastword=${LBUFFER##* }
+lastword=${lastword#}
+lastword=${(j:/:)${(s::)lastword}}
+[[ $lastword = //* ]] && lastword=$lastword[2,-1]
+LBUFFER="${LBUFFER% *} $lastword"
+CURSOR=$#LBUFFER
+
+# vim: ft=zsh
