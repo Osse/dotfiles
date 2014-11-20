@@ -10,6 +10,7 @@
 	pager = less -FSRX
 [log]
 	decorate = true
+	mailmap = true
 [alias]
 	a = add
 	ci = commit
