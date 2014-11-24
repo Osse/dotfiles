@@ -30,6 +30,7 @@
 	rcont = rebase --continue
 	dirdiff = difftool --tool vdwrap --dir-diff
 	reword = commit --amend
+	others = ls-files --others --exclude-standard
 [push]
 	default = simple
 [sendemail]
