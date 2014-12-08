@@ -45,3 +45,5 @@
 	tool = vimdiff
 [pager]
 	status = true
+[pull]
+	ff = true
