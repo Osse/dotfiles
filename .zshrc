@@ -94,7 +94,9 @@ case $HOST in
         hostcolor=$(( 0x$hash % 209 + 22 ))
         ;;
 esac
-PS1='%B%F{green}%n%f@%F{$hostcolor}%m%f:%F{blue}%1v%b${vcs_info_msg_0_}%(1j. %F{87}%j%f .)%f%(?..%F{red})$%f '
+psvar[3]=$hostcolor
+
+PS1='%B%F{green}%n%f@%F{%3v}%m%f:%F{blue}%1v%b${vcs_info_msg_0_}%(1j. %F{87}%j%f .)%f%(?..%F{red})$%f '
 # }}}
 
 # Keybindings {{{
