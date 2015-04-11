@@ -1,9 +1,5 @@
 if (( $+2 )); then
-    if (( $+3 )); then
-        echo cd: too many arguments >&2
-    else
-        builtin cd $1 "$2"
-    fi
+    builtin cd "$@"
 else
     if [[ -f $1 ]]; then
         builtin cd $1:h
