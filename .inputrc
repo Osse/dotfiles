@@ -1,5 +1,6 @@
 $include /etc/inputrc
 set show-all-if-ambiguous on
+set show-mode-in-prompt on
 set editing-mode vi
 set colored-stats on
 
