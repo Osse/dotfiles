@@ -7,7 +7,7 @@ zstyle ':completion:*' glob 1
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' ignore-parents parent pwd
 zstyle ':completion:*' special-dirs ..
-eval "$(dircolors -b <(dircolors -p | sed -e '/TERM xterm$/a TERM xterm-termite' -e '/TERM screen$/a TERM screen-it'))"
+eval "$(dircolors -b ~/.config/dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' list-suffixes true
