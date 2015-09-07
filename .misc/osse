@@ -1,0 +1,24 @@
+// based on a keyboard map from an 'xkb/symbols/no' file
+// Norwegian Øsse's Vim layout
+default  partial alphanumeric_keys
+partial alphanumeric_keys
+xkb_symbols "vimlayout" {
+
+    // Modifies the basic Norwegian layout to add movement
+    // and braces/brackets to useful keys
+
+    include "no(basic)"
+
+    name[Group1]="Norway - Vim";
+
+    key <AD01> { [ q,      Q,      asciitilde,    Greek_OMEGA ] };
+    key <AD02> { [ w,      W,      Up,            Lstroke     ] };
+    key <AC01> { [ a,      A,      Left,          masculine   ] };
+    key <AC02> { [ s,      S,      Down,          section     ] };
+    key <AC03> { [ d,      D,      Right,         ETH         ] };
+    key <AD04> { [ r,      R,      braceleft,     registered  ] };
+    key <AD05> { [ t,      T,      braceright,    THORN       ] };
+    key <AC04> { [ f,      F,      bracketleft,   ordfeminine ] };
+    key <AC05> { [ g,      G,      bracketright,  ENG         ] };
+    key <SPCE> { [ space,  space,  space,         space       ] };
+};
