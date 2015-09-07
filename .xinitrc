@@ -27,7 +27,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-xcape -e '#66=Escape'
-hash VBoxClient-all 2>/dev/null && VBoxClient-all
+run() { hash "$1" 2>/dev/null && "$@"; }
+
+run xcape -e '#66=Escape'
+run VBoxClient-all
 xset -b
 exec i3
