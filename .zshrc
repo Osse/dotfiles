@@ -101,6 +101,7 @@ PS1='%B%F{green}%n%f@%F{%3v}%m%f:%F{blue}%1v%b${vcs_info_msg_0_}%(1j. %F{87}%j%f
 
 # Keybindings {{{
 bindkey -v
+KEYTIMEOUT=5
 
 # 'v' starter editor for kommando
 autoload -U edit-command-line
