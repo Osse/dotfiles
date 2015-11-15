@@ -19,6 +19,10 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' verbose true
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
 
+# Autoload functions
+fpath=( ~/.zfunctions $fpath )
+autoload ~/.zfunctions/[^_]*(.:t)
+
 autoload -U compinit
 compinit -i
 compdef -d users
@@ -46,10 +50,6 @@ if [[ $TERM = xterm ]]; then
      TERM="xterm-256color"
 fi
 # }}}
-
-# Autoload functions
-fpath=( ~/.zfunctions $fpath )
-autoload ~/.zfunctions/[^_]*(.:t)
 
 # Prompt {{{
 
