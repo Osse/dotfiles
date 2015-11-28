@@ -64,7 +64,7 @@ zstyle ':vcs_info:*' unstagedstr '%F{214}•%f'
 zstyle ':vcs_info:git+set-message:*' hooks check-untracked
 
 +vi-check-untracked() {
-    [[ -n $(git ls-files --others --exclude-standard 2>&-) ]] &&
+    [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] &&
     hook_com[unstaged]="${hook_com[unstaged]}%F{red}•"
 }
 # }}}
