@@ -200,6 +200,28 @@ else
 fi
 
 unfunction bind2maps
+
+autoload -U select-quoted select-bracketed surround
+zle -N select-quoted
+zle -N select-bracketed
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+
+for m in visual viopp; do
+    for c in {a,i}{\',\",\`}; do
+        bindkey -M $m $c select-quoted
+    done
+    for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+        bindkey -M $m $c select-bracketed
+    done
+done
+
+bindkey -a cs change-surround
+bindkey -a ds delete-surround
+bindkey -a ys add-surround
+bindkey -M visual S add-surround
+
 # }}}
 # }}}
 
