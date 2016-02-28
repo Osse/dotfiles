@@ -1,0 +1,42 @@
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 338,
+       "width": 562,
+       "x": 0,
+       "y": 0
+    },
+    "name": "SSH: osse@bigge:~",
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^Termite$",
+       "instance": "^irc$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 338,
+       "width": 562,
+       "x": 0,
+       "y": 0
+    },
+    "name": "osse@snyltevm:~",
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^Termite$",
+       "instance": "^termite$"
+       }
+    ],
+    "type": "con"
+}
+

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+i3-msg '
+    workspace 1
+    rename workspace 1 to "1: IRC"
+    append_layout ~/.i3/workspace-1.json
+    focus left
+    exec --no-startup-id termite --name=irc -e "ssh -t bigge tmux -2 a"
+    exec --no-startup-id termite
+'
