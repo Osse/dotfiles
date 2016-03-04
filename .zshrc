@@ -254,6 +254,12 @@ function zle-line-init-2 zle-keymap-select {
 zle -N zle-keymap-select
 # }}}
 
+bracketed-paste() {
+    (( NUMERIC = 2 - $+NUMERIC ))
+    zle .bracketed-paste
+}
+zle -N bracketed-paste
+
 # Create zle-line-init
 function zle-line-init {
     zle-line-init-1
