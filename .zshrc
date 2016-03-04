@@ -278,7 +278,7 @@ function :he :h :help {
 }
 
 function mkcd() {
-    [[ ! -z $1 ]] && mkdir $1 && cd $1
+    [[ ! -z $1 ]] && mkdir -p $1 && cd $1
 }
 
 function mvcd() {
