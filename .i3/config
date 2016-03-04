@@ -146,6 +146,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 bindsym $mod+m exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
+assign [class="^Firefox$"] "5: Firefox"
+bindsym $mod+n [urgent="latest"] focus
+exec --no-startup-id "~/.i3/focus-firefox"
+
 # Do startup stuff
 exec --no-startup-id "~/.i3/startup"
 

@@ -1,0 +1,13 @@
+#!/usr/bin/python
+
+import i3ipc
+
+i3 = i3ipc.Connection()
+
+def on_window_focus(i3, e):
+    if e.container.window_class == 'Firefox':
+        i3.command('[con_id="{0}"] focus'.format(e.container.id))
+
+i3.on("window::urgent", on_window_focus)
+
+i3.main()
