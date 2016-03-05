@@ -82,17 +82,11 @@ function chpwd() {
 chpwd
 
 case $HOST in
-    osse-w760|ow-linux)
-        [[ -z $SSH_CONNECTION ]] &&
-            hostcolor=green ||
-            hostcolor=yellow ;;
-    bigge)
-        hostcolor=215 ;;
-    *)
-        hash=$(sha1sum <<< "$HOST")
-        hash=$hash[1,10]
-        hostcolor=$(( 0x$hash % 209 + 22 ))
-        ;;
+    bigge)      hostcolor=215 ;;
+    snyltevm)   hostcolor=81  ;;
+    worklappie) hostcolor=191 ;;
+    lappie)     hostcolor=206 ;;
+    *)          hostcolor=1
 esac
 psvar[3]=$hostcolor
 
