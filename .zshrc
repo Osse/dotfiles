@@ -56,16 +56,25 @@ fi
 # Git prompt {{{
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*' actionformats '%F{72}[%b%c%u %F{226}%a%F{72}]%f'
-zstyle ':vcs_info:*' formats '%F{72}[%b%c%u%F{72}]%f'
+zstyle ':vcs_info:*' actionformats '%F{72}[%f%m%F{72}%b%f%c%u %F{226}%a%F{72}]%f'
+zstyle ':vcs_info:*' formats '%F{72}[%f%m%F{72}%b%f%c%u%F{72}]%f'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{40}•%f'
 zstyle ':vcs_info:*' unstagedstr '%F{214}•%f'
-zstyle ':vcs_info:git+set-message:*' hooks check-untracked
+zstyle ':vcs_info:git:set-message:*' hooks check-untracked check-upstream
 
 +vi-check-untracked() {
     [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] &&
-    hook_com[unstaged]="${hook_com[unstaged]}%F{red}•"
+    hook_com[unstaged]+='%F{red}•%f'
+}
+
++vi-check-upstream() {
+    local ours theirs
+    git rev-list --count --left-right 'HEAD...@{u}' 2>/dev/null | read ours theirs
+    ((ours)) && hook_com[misc]="%F{green}$ours▲%f"
+    ((theirs)) && hook_com[misc]+="%F{yellow}$theirs▼%f"
+    hook_com[misc]+=${hook_com[misc]:+ }
+    return 0
 }
 # }}}
 
