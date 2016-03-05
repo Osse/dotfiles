@@ -70,8 +70,13 @@ zstyle ':vcs_info:git+set-message:*' hooks check-untracked
 # }}}
 
 function precmd() {
-    print -nP "\033]0;${SSH_CONNECTION:+SSH: }%n@%m:%1v\007"
+    (( title_set )) || print -nP "\033]0;${SSH_CONNECTION:+SSH: }%n@%m:%1v\007"
     vcs_info
+}
+
+function title() {
+    print -nP "\033]0;$*\007"
+    title_set=1
 }
 
 function chpwd() {
