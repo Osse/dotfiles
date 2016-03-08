@@ -5,11 +5,6 @@ i3-msg '
     rename workspace 1 to "1: IRC"
     append_layout ~/.i3/workspace-1.json
     exec --no-startup-id termite
-'
-
-until ping -c 1 -W 1 8.8.8.8 >/dev/null 2>&1; do :; done
-
-i3-msg '
-    exec --no-startup-id termite --title="Weechat @ bigge" --name=irc -e "ssh -t bigge tmux -2 a"
+    exec --no-startup-id ~/.i3/irc
     focus left
 '

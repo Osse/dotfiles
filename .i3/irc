@@ -1,0 +1,3 @@
+#!/bin/sh
+
+termite --title="Weechat @ Bigge" --name=irc -e 'zsh -c "until sleep 3; ssh -t bigge tmux a; do done"'
