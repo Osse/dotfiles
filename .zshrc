@@ -61,11 +61,12 @@ zstyle ':vcs_info:*' formats '%F{72}[%f%m%F{72}%b%f%c%u%F{72}]%f'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{40}•%f'
 zstyle ':vcs_info:*' unstagedstr '%F{214}•%f'
-zstyle ':vcs_info:git:set-message:*' hooks check-untracked check-upstream
+zstyle ':vcs_info:git+set-message:*' hooks check-untracked check-upstream
 
 +vi-check-untracked() {
     [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] &&
     hook_com[unstaged]+='%F{red}•%f'
+    return 0
 }
 
 +vi-check-upstream() {
