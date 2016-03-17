@@ -32,4 +32,5 @@ run() { hash "$1" 2>/dev/null && "$@"; }
 run xcape -e '#66=Escape'
 run VBoxClient-all
 xset -b
+PATH=lol:$PATH
 exec i3
