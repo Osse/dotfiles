@@ -254,23 +254,29 @@ alias zshrc='vim ~/.zshrc'
 # }}}
 
 #  Mode indication {{{
-function zle-line-init-2 zle-keymap-select {
+function indicate-mode {
     RPS1="%B${${KEYMAP/vicmd/n}/(main|viins)/i}%b"
     RPS2=$RPS1
     zle reset-prompt
 }
-zle -N zle-keymap-select
+zle -N zle-keymap-select indicate-mode
 # }}}
 
 autoload -Uz bracketed-paste-url-magic
 zle -N bracketed-paste bracketed-paste-url-magic
 
-# Create zle-line-init
+# Make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
 function zle-line-init {
-    zle-line-init-1
-    zle-line-init-2
+    printf '%s' ${terminfo[smkx]}
+    indicate-mode
 }
 zle -N zle-line-init
+
+function zle-line-finish () {
+    printf '%s' ${terminfo[rmkx]}
+}
+zle -N zle-line-finish
 
 # Other functions {{{
 
