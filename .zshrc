@@ -120,9 +120,6 @@ bindkey '^N' slash
 bindkey -M vicmd v edit-command-line
 bindkey -M viins '^F' edit-command-line
 
-# '^W' fix
-zle -N osse-backward-kill-word
-bindkey '^W' osse-backward-kill-word
 zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
