@@ -13,8 +13,9 @@
 	mailmap = true
 [alias]
 	a = add
-	ci = commit
+	ci = commit -v
 	cim = "!git commit -m \"$*\" && :"
+	cam = "!git commit -am \"$*\" && :"
 	st = status
 	s = status
 	d = diff
@@ -29,8 +30,9 @@
 	amend = commit --amend -C HEAD
 	rcont = rebase --continue
 	dirdiff = difftool --tool vdwrap --dir-diff
-	reword = commit --amend
+	reword = commit --amend -v
 	others = ls-files --others --exclude-standard
+	rewrite = "!git rebase -i $(git merge-base HEAD ${1:-\"@{u}\"}) && : "
 [push]
 	default = simple
 [sendemail]
