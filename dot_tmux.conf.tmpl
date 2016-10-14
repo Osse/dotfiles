@@ -1,5 +1,5 @@
 # Misc
-set-option        -g default-terminal "screen-it"
+set-option        -g default-terminal "tmux-256color"
 set-option        -g base-index       1
 set-option        -s escape-time      25
 set-window-option -g pane-base-index  1
@@ -68,8 +68,13 @@ bind-key -n M-9 select-window -t 9
 bind-key M-9 send-keys M-9
 
 # X11 clipboard integration
+{{ if eq .chezmoi.os "windows" }}
+bind-key x run "tmux save-buffer /dev/clipboard"
+bind-key X run "tmux load-buffer /dev/clipboard"
+{{ else }}
 bind-key x run "tmux save-buffer - | xsel -ib"
 bind-key X run "xsel -ob | tmux load-buffer -"
+{{ end }}
 
 # Kitty Ctrl-[Shift-]-Tab
 set -s user-keys[0] "\e[1;5I"
@@ -88,3 +93,8 @@ bind-key -n User3 send-keys M-2
 bind-key -n User4 send-keys M-3
 bind-key -n User5 send-keys M-4
 bind-key -n User6 send-keys M-5
+
+{{ if eq .chezmoi.os "windows" }}
+# MSYS2 cwd issue
+set-environment -g CHERE_INVOKING 1
+{{ end }}
