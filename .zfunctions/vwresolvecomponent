@@ -1,0 +1,5 @@
+if [[ $PWD = */SW/vwservice* ]]; then
+    vwservice=1
+else
+    vwclient=1
+fi

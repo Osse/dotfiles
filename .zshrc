@@ -308,6 +308,7 @@ function sprunge() {
     curl -sF 'sprunge=<-' http://sprunge.us | tr -d '\n'
     echo ${1:+\?$1}
 }
+
 # }}}
 
 # vim: foldmethod=marker foldlevel=0

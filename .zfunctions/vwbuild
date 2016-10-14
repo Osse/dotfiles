@@ -1,0 +1,6 @@
+local toplevel build vwclient vwservice
+vwresolve "$@" || return
+
+taskkill.exe //IM VWClient.exe 2>/dev/null
+taskkill.exe //IM VWService.exe 2>/dev/null
+cmake --build "$build"

@@ -1,0 +1,12 @@
+local toplevel build vwclient vwservice
+vwresolve "$@" || return
+vwresolvecomponent "$@" || return
+
+if (( $# == 1 )) && [[ $1 != *[!0-9]* ]]; then
+    set -- -H 192.168.100.$1
+fi
+if (( vwclient )); then
+    "$build/vwclient/VWClient.exe" -u administrator -p vwclient --no-dash "$@"
+elif (( vwservice )); then
+    "$build/vwservice/VWService.exe" -e "$@"
+fi

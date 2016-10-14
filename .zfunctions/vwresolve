@@ -1,0 +1,9 @@
+toplevel=$(git rev-parse --show-toplevel)
+local buildprefix="$toplevel/../build-"
+
+if [[ $1 = r* ]]; then
+    build=${buildprefix}Release
+    shift
+else
+    build=${buildprefix}Debug
+fi

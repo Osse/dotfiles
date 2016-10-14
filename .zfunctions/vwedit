@@ -1,0 +1,9 @@
+local toplevel build vwclient vwservice
+vwresolve "$@" || return
+vwresolve "$@" || return
+
+if (( vwservice )); then
+    vim "$build/vwservice/config.txt"
+else
+    vim "$build/vwclient/config.txt"
+fi
