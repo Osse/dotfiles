@@ -5,5 +5,7 @@ export BROWSER=firefox
 export GCC_COLORS=1
 
 # Add stuff to PATH
-path=( $HOME/bin $HOME/.gem/ruby/2.1.0/bin $path )
+path=( /mingw64/bin $HOME/bin $path )
 typeset -U path
+
+manpath=( /mingw64/share/man $manpath )
