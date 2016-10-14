@@ -32,7 +32,9 @@
 	dirdiff = difftool --tool vdwrap --dir-diff
 	reword = commit --amend -v
 	others = ls-files --others --exclude-standard
-	rewrite = "!git rebase -i $(git merge-base HEAD ${1:-\"@{u}\"}) && : "
+	rewrite = "![ \"$1\" = -f ] && { export GIT_EDITOR=cat; shift; }; git rebase -i $(git merge-base HEAD ${1:-\"@{u}\"}) && : "
+	review = "!git log --patch --reverse $(git merge-base HEAD ${1:-\"@{u}\"}).. && : "
+	alias = config --get-regexp \"^alias\\.\"
 [push]
 	default = simple
 [sendemail]
