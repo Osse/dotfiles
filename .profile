@@ -23,9 +23,13 @@ prefix_path() {
     esac
 }
 
+prefix_path /mingw64/bin
+
 for bin in .fzf/bin .cargo/bin .local/*/bin .local/bin; do
     [ -d "$bin" ] || continue
     prefix_path "$HOME/$bin"
 done
 
 unset -f prefix_path
+
+MANPATH="/mingw64/share/man:$MANPATH"
