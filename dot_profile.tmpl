@@ -27,4 +27,12 @@ for bin in $HOME/.fzf/bin $HOME/.cargo/bin $HOME/.local/*/bin $HOME/.local/bin; 
     [ -d "$bin" ] && prefix_path "$bin"
 done
 
+{{ if eq .chezmoi.os "windows" }}
+for bin in /c/tools/neovim/nvim-win64/bin /c/ProgramData/chocolatey/bin "/c/Program Files/CMake/bin" /mingw64/bin; do
+    [ -d "$bin" ] && prefix_path "$bin"
+done
+
+export MANPATH="/mingw64/share/man:$MANPATH"
+{{ end }}
+
 unset -f prefix_path
