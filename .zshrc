@@ -117,6 +117,7 @@ autoload -U edit-command-line
 autoload -U slash
 zle -N edit-command-line
 zle -N slash
+zle -C kek expand-or-complete _files
 bindkey '^N' slash
 bindkey -M vicmd v edit-command-line
 bindkey -M viins '^F' edit-command-line
