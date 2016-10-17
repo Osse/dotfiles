@@ -5,6 +5,6 @@ lastword=${(j:/:)${(s::)lastword}}
 LBUFFER="${LBUFFER% *} $lastword"
 CURSOR=$#LBUFFER
 
-zle -U $'\t'
+zle slashcomplete
 
 # vim: ft=zsh
