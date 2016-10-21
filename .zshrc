@@ -1,5 +1,6 @@
 # Completion {{{
 zstyle ':completion:*' completer _expand _complete _ignored
+zstyle ':completion:*' accept-exact-dirs true
 zstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' file-sort name
 zstyle ':completion:*' format '%BCompleting %d%b'
