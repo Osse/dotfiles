@@ -18,6 +18,7 @@ zstyle ':completion:*' prompt 'Errors: %e'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' verbose true
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
+zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 
 # Autoload functions
 fpath=( ~/.zfunctions $fpath )
