@@ -7,14 +7,27 @@ i3 = i3ipc.Connection()
 
 # Current number
 focused = i3.get_tree().find_focused().workspace().name
-name = focused.split(': ')
+focusedList = focused.split(': ')
+num = focusedList[0]
+if len(focusedList) > 1:
+    name = focusedList[1]
+else:
+    name = ""
 
 # Execute rofi and store its output
-rofi = ['rofi', '-dmenu', '-p', '{0}: '.format(name[0]), '-filter', name[1]]
+rofi = ['rofi', '-dmenu', '-p', '{0}: '.format(num), '-filter', name]
 proc = subprocess.run(rofi, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE)
+
+if proc.returncode > 0:
+    from sys import exit
+    exit(proc.returncode)
 
 # Turn output into string and strip newline
 choice = proc.stdout[0:-1].decode("utf-8")
 
-if len(choice) and choice != name[1]:
-    i3.command('rename workspace to "{0}"'.format(name[0] + ": " + choice))
+if choice != name:
+    if len(choice):
+        newName = "{0}: {1}".format(num, choice)
+    else:
+        newName = "{0}".format(num)
+    i3.command('rename workspace to "{0}"'.format(newName))
