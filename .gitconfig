@@ -4,6 +4,7 @@
 	ui = auto
 [diff]
 	tool = vimdiff
+	orderFile = C:/Users/ow/.gitdifforder
 [core]
 	editor = vim </dev/tty
 	excludesfile = ~/.gitignore
