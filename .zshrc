@@ -19,6 +19,7 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' verbose true
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
 zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
+zstyle ':bracketed-paste-magic' paste-finish makegitrelative url-magic
 
 # Autoload functions
 fpath=( ~/.zfunctions $fpath )
@@ -262,8 +263,8 @@ function indicate-mode {
 zle -N zle-keymap-select indicate-mode
 # }}}
 
-autoload -Uz bracketed-paste-url-magic
-zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
 
 # Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
