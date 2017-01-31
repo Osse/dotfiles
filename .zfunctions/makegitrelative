@@ -1,0 +1,6 @@
+if [[ $PASTED = [ab]/* ]] && prefix=$(git rev-parse --show-cdup); then
+    PASTED="$prefix${PASTED#[ab]/}"
+    return 1
+else
+    return 0
+fi

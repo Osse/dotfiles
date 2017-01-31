@@ -1,0 +1,20 @@
+# Adapted from bracketed-paste-url-magic. See that file's
+# comment header for more info.
+
+local -a schema
+zstyle -a :bracketed-paste-url-magic schema schema || schema=(http:// https:// ftp:// ftps:// file:// ssh:// sftp:// magnet:)
+
+local wantquote=${NUMERIC:-0}
+
+if (( $wantquote == 0 )); then
+  if [[ $PASTED = (${(~j:|:)schema})* ]]; then
+    wantquote=1
+  fi
+fi
+
+if (( $wantquote == 1 )); then
+  PASTED=${(q-)PASTED}
+  return 1
+fi
+
+return 0
