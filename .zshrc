@@ -189,19 +189,18 @@ bind2maps       viins vicmd -- PageDown    ''
 # Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-line-init-1 () {
+    function zle-line-init () {
         emulate -L zsh
+        indicate-mode
         printf '%s' ${terminfo[smkx]}
     }
+    zle -N zle-line-init
     function zle-line-finish () {
         emulate -L zsh
         printf '%s' ${terminfo[rmkx]}
     }
     zle -N zle-line-finish
 else
-    function zle-line-init-1 () {
-        :
-    }
     for i in {s,r}mkx; do
         (( ${+terminfo[$i]} )) || debian_missing_features+=($i)
     done
@@ -266,18 +265,6 @@ zle -N zle-keymap-select indicate-mode
 
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
-
-# Make sure the terminal is in application mode, when zle is
-# active. Only then are the values from $terminfo valid.
-function zle-line-init {
-    printf '%s' ${terminfo[smkx]}
-    indicate-mode
-}
-zle -N zle-line-init
-
-function zle-line-finish () {
-    printf '%s' ${terminfo[rmkx]}
-}
 zle -N zle-line-finish
 
 # Other functions {{{
