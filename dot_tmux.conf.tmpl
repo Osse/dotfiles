@@ -38,6 +38,7 @@ bind-key p paste-buffer
 bind-key b last-pane
 bind-key r source ~/.tmux.conf
 bind-key s set-window-option synchronize-panes
+bind-key -T root PageUp if-shell -F '#{==:#{pane_current_command},zsh}' 'copy-mode -eu' 'send-keys PageUp'
 
 # Key bindings for quickly changing panes and windows without prefix
 bind-key -n M-w select-pane -U
