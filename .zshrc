@@ -298,3 +298,5 @@ function sprunge() {
 
 # vim: foldmethod=marker foldlevel=0
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
