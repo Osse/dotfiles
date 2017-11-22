@@ -36,6 +36,8 @@
 	rewrite = "![ \"$1\" = -f ] && { export GIT_EDITOR=cat; shift; }; git rebase -i $(git merge-base HEAD ${1:-\"@{u}\"}) && : "
 	review = "!u=$(git rev-parse ${1:-\"@{u}\"} 2>/dev/null || echo master); git log --patch --reverse $u.. && :"
 	alias = config --get-regexp \"^alias\\.\"
+	fixup = commit --fixup
+	squash = commit --squash
 [push]
 	default = simple
 [sendemail]
