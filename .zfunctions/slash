@@ -1,10 +1,10 @@
 lastword=${LBUFFER##* }
-lastword=${lastword#}
+if [[ $lastword = *[^/]/[^/]* ]]; then
+    return
+fi
 lastword=${(j:/:)${(s::)lastword}}
 [[ $lastword = //* ]] && lastword=$lastword[2,-1]
 LBUFFER="${LBUFFER% *} $lastword"
 CURSOR=$#LBUFFER
-
-zle slashcomplete
 
 # vim: ft=zsh
