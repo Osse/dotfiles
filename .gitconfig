@@ -24,6 +24,7 @@
 	co = checkout
 	br = branch
 	fuckit = reset --hard
+	fuckup = reset --hard @{u}
 	lg = log --graph --branches --oneline --date-order
 	lgg = log --graph --all --oneline --date-order
 	lgup = log --graph --oneline --date-order HEAD @{u}
