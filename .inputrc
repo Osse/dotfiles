@@ -8,3 +8,4 @@ set colored-stats on
 "\e[B":history-search-forward
 "M-.":yank-last-arg
 "\C-w":backward-kill-word
+set enable-bracketed-paste on
