@@ -240,7 +240,7 @@ alias -g N2='2> /dev/null'
 alias -g N='> /dev/null 2>&1'
 alias -g XS=' $(xsel)'
 alias fullname='readlink -f'
-alias g=git
+#alias g=git
 alias help='run-help'
 alias l='ls -CF'
 alias la='ls -A'
@@ -268,6 +268,15 @@ zle -N bracketed-paste bracketed-paste-magic
 zle -N zle-line-finish
 
 # Other functions {{{
+
+function g() {
+    if ((  $# )); then
+        git "$@"
+    else
+        git status
+    fi
+}
+compdef g=git
 
 function ls grep egrep fgrep {
     command $0 --color=auto "$@"
