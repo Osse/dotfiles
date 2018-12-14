@@ -39,7 +39,11 @@ fpath=( ~/.zfunctions $fpath )
 autoload ~/.zfunctions/[^_]*(.:t)
 
 autoload -U compinit
+{{ if eq .chezmoi.os "windows" }}
+compinit -C
+{{ else }}
 compinit -i
+{{ end }}
 compdef -d users
 # ]]]
 
