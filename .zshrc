@@ -37,7 +37,7 @@ fpath=( ~/.zfunctions $fpath )
 autoload ~/.zfunctions/[^_]*(.:t)
 
 autoload -U compinit
-compinit -i
+compinit -C
 compdef -d users
 # }}}
 
