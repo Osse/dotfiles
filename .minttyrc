@@ -1,0 +1,13 @@
+BoldAsFont=-1
+Locale=en_US
+Charset=UTF-8
+Font=DejaVu Sans Mono
+BellType=0
+CursorType=block
+Columns=128
+Rows=39
+WindowShortcuts=no
+Term=xterm-256color
+CopyAsRTF=no
+SwitchShortcuts=no
+Scrollbar=none
