@@ -1,0 +1,4 @@
+local -a words
+words=(${(f)"$(tmux capture-pane -J -p | grep -o '\<\w\+\>')"})
+_wanted values expl 'words from current tmux pane' compadd -a words
+bindkey -M menuselect '^T' menu-complete

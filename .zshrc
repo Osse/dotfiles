@@ -17,6 +17,12 @@ zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' prompt 'Errors: %e'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' verbose true
+zstyle ':completion:tmux-complete:*' completer tmux_complete
+zstyle ':completion:tmux-complete:*' ignore-line current
+zstyle ':completion:tmux-complete:*' menu yes select
+zstyle ':completion:tmux-complete-path:*' completer tmux_complete_path
+zstyle ':completion:tmux-complete-path:*' ignore-line current
+zstyle ':completion:tmux-complete-path:*' menu yes select
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
 zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 zstyle ':bracketed-paste-magic' paste-finish makegitrelative url-magic
@@ -95,6 +101,8 @@ autoload -U slash
 zle -N edit-command-line
 zle -N slash
 zle -C kek expand-or-complete _files
+zle -C tmux-complete complete-word _generic
+zle -C tmux-complete-path complete-word _generic
 bindkey '^N' slash
 bindkey -M vicmd v edit-command-line
 bindkey -M viins '^F' edit-command-line
@@ -204,6 +212,9 @@ bindkey -a cs change-surround
 bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -M visual S add-surround
+
+bindkey '^X^T' tmux-complete
+bindkey '^X^P' tmux-complete-path
 
 # }}}
 # }}}

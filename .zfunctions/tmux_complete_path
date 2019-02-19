@@ -1,0 +1,15 @@
+local -a words
+local -a paths
+
+words=(${(f)"$(tmux capture-pane -J -p | grep -o '[[:alnum:]/._]\+')"})
+
+for w in $words; do
+    w=${w#[ab]/}
+    w=${w%/}
+    if [[ -e $w ]]; then
+        paths+=($w)
+    fi
+done
+
+_wanted values expl 'paths from current tmux pane' compadd -a paths
+bindkey -M menuselect '^P' menu-complete
