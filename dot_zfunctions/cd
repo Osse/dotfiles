@@ -5,6 +5,8 @@ else
         builtin cd $1:h
     elif [[ $1 = :/* ]]; then
         builtin cd "$(git rev-parse --show-toplevel)${1#:}"
+    elif [[ $1 = [A-Z]:* ]]; then
+        builtin cd "$(cygpath -au "$1")"
     else
         builtin cd $1
     fi
