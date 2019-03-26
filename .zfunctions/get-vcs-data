@@ -1,0 +1,322 @@
+#autoload
+
+##
+# Get VCS data based on the current directory.
+#
+# @return 0
+
+##
+# Get .git directory for work directory
+(( $+functions[vcs-get-data:data:git-dir] )) ||
+vcs-get-data:data:git-dir() {
+  local git_dir pwd=${1:-$PWD}
+
+  if [[ -e $rc_vcs_dir_cache[$pwd] ]]; then
+    git_dir=$rc_vcs_dir_cache[$pwd]
+  else
+    git_dir=$( command git rev-parse --git-dir 2> /dev/null ) || {
+      rc_vcs_data=( )
+      rc_vcs_rprompt=( )
+      unset "rc_vcs_dir_cache[$pwd]"
+      return 1
+    }
+    git_dir=${git_dir:a}
+    rc_vcs_dir_cache[$pwd]=$git_dir
+  fi
+
+  rc_vcs_data[git_dir]=$git_dir
+  return 0
+}
+
+##
+# Get current action (rebase, merge, &c.)
+(( $+functions[vcs-get-data:data:action] )) ||
+vcs-get-data:data:action() {
+  local git_dir=${1:-${rc_vcs_data[git_dir]}}
+
+  for 1 in $git_dir/{rebase,.dotest}-merge/interactive; do
+    [[ -e $1 ]] || continue
+    rc_vcs_data[action]=rebase-i
+    return 0
+  done
+
+  for 1 in $git_dir/{rebase,rebase-apply,../.dotest}; do
+    [[ -e $1 ]] || continue
+
+    if [[ -e $1/rebasing ]]; then
+      rc_vcs_data[action]=rebase
+    elif [[ -e $1/applying ]]; then
+      rc_vcs_data[action]=am
+    else
+      rc_vcs_data[action]=am/rebase
+    fi
+
+    return 0
+  done
+
+  for 1 in $git_dir/{rebase,.dotest}-merge; do
+    [[ -d $1 ]] || continue
+    rc_vcs_data[action]=rebase-m
+    return 0
+  done
+
+  [[ -e $git_dir/MERGE_HEAD ]] && {
+    rc_vcs_data[action]=merge
+    return 0
+  }
+
+  [[ -e $git_dir/BISECT_LOG ]] && {
+    rc_vcs_data[action]=bisect
+    return 0
+  }
+
+  [[ -e $git_dir/CHERRY_PICK_HEAD ]] && {
+    if [[ -e $git_dir/sequencer ]]; then
+      rc_vcs_data[action]=cherry-seq
+    else
+      rc_vcs_data[action]=cherry
+    fi
+    return 0
+  }
+
+  [[ -e $git_dir/sequencer ]] && {
+    rc_vcs_data[action]=cherry-or-revert
+    return 0
+  }
+
+  return 1
+}
+
+##
+# Get misc. data which can be derived from `git status`
+(( $+functions[vcs-get-data:data:misc] )) ||
+vcs-get-data:data:misc() {
+  local     tmp i
+  local -ha status tmpa
+
+  status=( ${(0)"$( {
+    for 1 in --porcelain=v2 --porcelain; do
+      command git status $1 -z \
+        --ignore-submodules=dirty \
+        --untracked-files=all \
+        --branch \
+      && break
+    done
+  } 2> /dev/null )"} )
+
+  (( $#status )) || return 1
+
+  # Porcelain v2
+  if [[ $status[1] == '# '* ]]; then
+    for (( i = 1; i <= $#status; i++ )); do
+      [[ $status[i] == '# '* ]] || break
+
+      case $status[i] in
+        '# branch.oid '?*)
+          rc_vcs_data[commit]=${status[i]#\# branch.oid }
+          ;;
+        '# branch.head '*)
+          [[ -z $rc_vcs_data[branch] ]] && rc_vcs_data[branch]=${status[i]#\# branch.head }
+          ;;
+        '# branch.upstream '?*)
+          rc_vcs_data[upstream]=${status[i]#\# branch.upstream }
+          ;;
+        '# branch.ab '?*)
+          tmp=${status[i]#\# branch.ab }
+           rc_vcs_data[ahead]=${${(M)tmp##+[0-9]##}#+}
+          rc_vcs_data[behind]=${${(M)tmp%%-[0-9]##}#-}
+          ;;
+      esac
+    done
+
+    [[ ${rc_vcs_data[commit]:-(initial)} == '(initial)' ]] &&
+    rc_vcs_data[commit]=${(l<40><0>):-}
+
+    [[ $rc_vcs_data[branch] == '(detached)' ]] &&
+    # vcs_info makes the branch empty if we've got an action, but we can find it
+    # in the .git directory (ty osse)
+    if [[ -s $rc_vcs_data[git_dir]/rebase-merge/head-name ]]; then
+      rc_vcs_data[branch]=$( < $rc_vcs_data[git_dir]/rebase-merge/head-name )
+      rc_vcs_data[branch]=${rc_vcs_data[branch]#refs/heads/}
+    else
+      [[ -z $rc_vcs_data[action] ]] &&
+      [[ -z $rc_vcs_data[upstream] ]] &&
+      rc_vcs_data[branch]=${${rc_vcs_data[commit]}[1,7]}...
+    fi
+
+    tmpa=( ${(@M)status##\? *} )
+    rc_vcs_data[untracked]=$#tmpa
+
+    tmpa=( ${(@M)status##[12] [ACDMRU]? *} )
+    rc_vcs_data[staged]=$#tmpa
+
+    tmpa=( ${(@M)status##[12] ?[ACDMRU] *} )
+    rc_vcs_data[unstaged]=$#tmpa
+
+  # Porcelain v1
+  elif [[ $status[1] == '## '* ]]; then
+    tmp=${status[1]##\#\# }
+
+    rc_vcs_data[commit]=$( command git rev-parse -q --verify HEAD )
+
+    [[ ${rc_vcs_data[commit]:-(initial)} == '(initial)' ]] &&
+    rc_vcs_data[commit]=${(l<40><0>):-}
+
+    if [[ $tmp == 'No commits yet on '* ]]; then
+      rc_vcs_data[branch]=${tmp#No commits yet on }
+    elif [[ $tmp == 'HEAD (no branch)' ]]; then
+      # vcs_info leaves this empty if we've got an action
+      rc_vcs_data[branch]=
+
+      [[ -n $rc_vcs_data[action] ]] ||
+      rc_vcs_data[branch]=${${rc_vcs_data[commit]}[1,7]}...
+    else
+      [[ $tmp == *' ['(ahead|behind)*']' ]] && {
+        i=${tmp##* \[}
+
+        [[ $i == ahead* ]] && {
+          rc_vcs_data[ahead]=${${i#ahead }%%[^0-9]*}
+          i=${i##ahead [0-9]##(, |\]|)}
+        }
+        [[ $i == behind* ]] && {
+          rc_vcs_data[behind]=${${i#behind }%%[^0-9]*}
+          i=${i##behind [0-9]##(, |\]|)}
+        }
+
+        tmp=${tmp%* \[(ahead|behind)*\]}
+      }
+      rc_vcs_data[upstream]=${tmp##*...}
+        rc_vcs_data[branch]=${tmp%...*}
+    fi
+
+    tmpa=( ${(@M)status##\?\? *} )
+    rc_vcs_data[untracked]=$#tmpa
+
+    tmpa=( ${(@M)status##[ACDMRU]  *} )
+    rc_vcs_data[staged]=$#tmpa
+
+    tmpa=( ${(@M)status## [ACDMRU] *} )
+    rc_vcs_data[unstaged]=$#tmpa
+
+  else
+    return 1
+  fi
+
+  return 0
+}
+
+##
+# Build pre-formatted RPROMPT segments
+(( $+functions[vcs-get-data:rprompt] )) ||
+vcs-get-data:rprompt() {
+  local \
+    ab branch commit \
+    x='%f' \
+    k='%F{8}' \
+    r='%F{1}' \
+    g='%F{2}' \
+    y='%F{3}' \
+    m='%F{5}'
+  local -A icon
+
+  if (( rc_locale_is_unicode )); then
+      icon[clean]='◇'
+    icon[changed]='±'
+    icon[initial]='?'
+  else
+      icon[clean]='.'
+    icon[changed]='!'
+    icon[initial]='?'
+  fi
+
+  # Tracked or staged changes — red
+  if (( rc_vcs_data[staged] || rc_vcs_data[unstaged] )); then
+    rc_vcs_rprompt+=( "${r}%{%G${icon[changed]}%}${x}" )
+  # Untracked changes — yellow
+  elif (( rc_vcs_data[untracked] )); then
+    rc_vcs_rprompt+=( "${y}%{%G${icon[changed]}%}${x}" )
+  # No changes — green
+  else
+    rc_vcs_rprompt+=( "${g}%{%G${icon[clean]}%}${x}" )
+  fi
+
+  # Ahead/behind up-stream
+  if (( rc_vcs_data[ahead] || rc_vcs_data[behind] )); then
+    (( rc_vcs_data[behind] )) && ab+=-$rc_vcs_data[behind]
+    (( rc_vcs_data[ahead]  )) && ab+=+$rc_vcs_data[ahead]
+    rc_vcs_rprompt+=( "${y}${ab}${x}" )
+
+  # No up-stream
+  elif [[ -z $rc_vcs_data[upstream] ]]; then
+    rc_vcs_rprompt+=( "${y}%{%G${icon[initial]}%}${x}" )
+  fi
+
+  # Action (rebase, &c.)
+  [[ -n $rc_vcs_data[action] ]] &&
+  rc_vcs_rprompt+=( "${m}(${rc_vcs_data[action]})${x}" )
+
+  # Up-stream + branch
+  branch=${rc_vcs_data[branch]}
+  [[ ${rc_vcs_data[upstream]:-origin/} == origin/* ]] ||
+  branch=${rc_vcs_data[upstream]}
+
+  # Commit hash
+  commit=${${rc_vcs_data[commit]}[1,7]}
+
+  rc_vcs_rprompt+=( "${k}${branch}:${commit}${x}" )
+  return 0
+}
+
+##
+# Fill psvar with stuff
+(( $+functions[vcs-get-data:psvar] )) ||
+vcs-get-data:psvar() {
+  [[ -n $rc_vcs_data[branch] ]] && psvar[11]=${rc_vcs_data[branch]}
+  (( rc_vcs_data[ahead] )) && psvar[12]=$rc_vcs_data[ahead]▲
+  (( rc_vcs_data[behind] )) && psvar[13]=$rc_vcs_data[behind]▼
+  (( rc_vcs_data[behind] || rc_vcs_data[ahead] )) && psvar[14]=' '
+  (( rc_vcs_data[staged] )) && psvar[15]=•
+  (( rc_vcs_data[unstaged] )) && psvar[16]=•
+  (( rc_vcs_data[untracked] )) && psvar[17]=•
+  [[ -n $rc_vcs_data[action] ]] && psvar[18]=${rc_vcs_data[action]}' '
+
+  return 0
+}
+##
+# Main function
+vcs-get-data() {
+  # Cache for .git directories (so we don't have to call `git rev-parse
+  # --git-dir` over and over again)
+  (( $+rc_vcs_dir_cache )) || typeset -gA rc_vcs_dir_cache
+  # 'Raw' VCS data — updated based on the current directory each time this
+  # function is run
+  (( $+rc_vcs_data )) || typeset -gA rc_vcs_data
+  # Pre-formatted RPROMPT segments — updated based on the current directory each
+  # time this function is run
+  (( $+rc_vcs_rprompt )) || typeset -ga rc_vcs_rprompt
+
+  rc_vcs_data=(
+    git_dir   ''
+    action    ''
+    commit    0
+    branch    ''
+    upstream  ''
+    ahead     0
+    behind    0
+    staged    0
+    unstaged  0
+    untracked 0
+  )
+  rc_vcs_rprompt=( )
+  for i in {11..18}; do psvar[$i]=; done
+
+  vcs-get-data:data:git-dir || return 1
+  vcs-get-data:data:action   # OK to fail
+  vcs-get-data:data:misc    || return 1
+  vcs-get-data:rprompt
+  vcs-get-data:psvar
+
+  return 0
+}
+
+vcs-get-data "$@"

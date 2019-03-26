@@ -41,7 +41,6 @@ setopt append_history    \
        extended_glob     \
        auto_cd           \
        cdable_vars       \
-       prompt_subst      \
        transient_rprompt \
        hist_ignore_dups
 # }}}
@@ -55,35 +54,9 @@ fi
 
 # Prompt {{{
 
-# Git prompt {{{
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*' actionformats '%F{72}[%f%m%F{72}%b%f%c%u %F{226}%a%F{72}]%f'
-zstyle ':vcs_info:*' formats '%F{72}[%f%m%F{72}%b%f%c%u%F{72}]%f'
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr '%F{40}•%f'
-zstyle ':vcs_info:*' unstagedstr '%F{214}•%f'
-zstyle ':vcs_info:git+set-message:*' hooks check-untracked check-upstream
-
-+vi-check-untracked() {
-    [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] &&
-    hook_com[unstaged]+='%F{red}•%f'
-    return 0
-}
-
-+vi-check-upstream() {
-    local ours theirs
-    git rev-list --count --left-right 'HEAD...@{u}' 2>/dev/null | read ours theirs
-    ((ours)) && hook_com[misc]="%F{green}$ours▲%f"
-    ((theirs)) && hook_com[misc]+="%F{yellow}$theirs▼%f"
-    hook_com[misc]+=${hook_com[misc]:+ }
-    return 0
-}
-# }}}
-
 function precmd() {
     (( title_set )) || print -nP "\033]0;${SSH_CONNECTION:+SSH: }%n@%m:%~\007"
-    vcs_info
+    get-vcs-data
 }
 
 function title() {
@@ -107,7 +80,9 @@ case $HOST in
 esac
 psvar[3]=$hostcolor
 
-PS1='%B%F{green}%n%f@%F{%3v}%m%f:%F{blue}%1v%b${vcs_info_msg_0_}%(1j. %F{87}%j%f .)%f%(?..%F{red})$%f '
+git_prompt='%(11V.%F{72}[%f%18v%F{green}%12v%f%F{yellow}%13v%f%14v%F{72}%11v%f%F{40}%15v%f%F{214}%16v%f%F{red}%17v%f%F{72}]%f.)'
+#                       [   a  up             down            sp  branch      staged      unstaged     untracked    end   ]
+PS1="%B%F{green}%n%f@%F{%3v}%m%f:%F{blue}%1v%b$git_prompt%(1j. %F{87}%j%f .)%f%(?..%F{red})$%f "
 # }}}
 
 # Keybindings {{{
