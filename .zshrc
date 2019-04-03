@@ -298,4 +298,9 @@ function ix() {
 }
 # }}}
 
+# stuff
+
+hash -d g=/c/git
+hash -d w=/c/git/walle
+hash -d c=/c/git/cpp
 # vim: foldmethod=marker foldlevel=0
