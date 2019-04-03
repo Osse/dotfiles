@@ -314,6 +314,8 @@ VIRTUAL_ENV_DISABLE_PROMPT=1
 source ~/venv/bin/activate
 hash -d z=$HOME/dev/zivid-sdk
 hash -d b=$HOME/dev/zivid-sdk/sdk/build
+{{ else if eq .chezmoi.hostname "ZDEW-64185" }}
+hash -d z=/c/zivid/zivid-sdk
 {{ end }}
 
 vim-insert-impl() { CURSOR=0; zle .vi-insert; CURSOR=$1; }
