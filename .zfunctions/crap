@@ -11,9 +11,12 @@ else
 fi
 
 ls --color $files
-print -P '%B'
-print -c 'v: Vim' 'l: less' 'h: head' 'n: next' '[yd]: delete' 'D: delete all' 'q: quit' 'Q: quit and delete selected'
-print -P '%b'
+
+print_help() {
+    print -P '%B'
+    print -c 'v: Vim' 'l: less' 'h: head' 'n: next' '[yd]: delete' 'D: delete all' 'q: quit' 'Q: quit and delete selected' '?: Show help'
+    print -P '%b'
+}
 
 prompt() {
     local x
@@ -34,6 +37,7 @@ for f in $files; do
         n) continue                 ;;
         q) return 1                 ;;
         Q) break                    ;;
+        \?) print_help              ;;
         *) :                        ;;
     esac
     prompt 'Delete? ' && nukes+=($f)
