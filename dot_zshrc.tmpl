@@ -327,4 +327,13 @@ zle -N vi-insert vim-insert
 zle -N vi-add-next vim-add-next
 zle -N vi-add-eol vim-add-eol
 
+qopen() {
+    local windir
+    windir=$(cygpath -wa ${1:-$PWD} | sed 's:/:\\:g')
+    /c/Program\ Files/Q-Dir/Q-Dir.exe "/e>$windir>"
+}
+wcd() {
+    cd "$(cygpath $1)"
+}
+
 # vim: foldmethod=marker foldmarker=[[[,]]] foldlevel=0
