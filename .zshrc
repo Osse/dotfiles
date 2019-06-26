@@ -311,4 +311,14 @@ function ix() {
 hash -d g=/c/git
 hash -d w=/c/git/walle
 hash -d c=/c/git/cpp
+
+qopen() {
+    local windir
+    windir=$(cygpath -wa ${1:-$PWD} | sed 's:/:\\:g')
+    /c/Program\ Files/Q-Dir/Q-Dir.exe "/e>$windir>"
+}
+wcd() {
+    cd "$(cygpath $1)"
+}
+
 # vim: foldmethod=marker foldlevel=0
