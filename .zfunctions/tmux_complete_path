@@ -1,15 +1,21 @@
+local -A panes
+panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
+
 local -a words
+words=(${(f)"$(
+    for pane active in ${(kv)panes}; do
+        tmux capture-pane -J -p -t $pane
+    done | grep -o '~\?[[:alnum:]/._]\+'
+)"})
+
 local -a paths
-
-words=(${(f)"$(tmux capture-pane -J -p | grep -o '[[:alnum:]/._]\+')"})
-
 for w in $words; do
     w=${w#[ab]/}
     w=${w%/}
-    if [[ -e $w ]]; then
-        paths+=($w)
+    if [[ -e $w ]] || [[ $w = '~/'* && -e "$HOME${w#\~}" ]]; then
+            paths+=($w)
     fi
 done
 
-_wanted values expl 'paths from current tmux pane' compadd -a paths
+_wanted values expl 'paths from visible tmux panes' compadd -Q -a paths
 bindkey -M menuselect '^P' menu-complete
