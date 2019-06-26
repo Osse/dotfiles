@@ -98,7 +98,7 @@ vcs-get-data:data:misc() {
     for 1 in --porcelain=v2 --porcelain; do
       command git status $1 -z \
         --ignore-submodules=dirty \
-        --untracked-files=all \
+        --untracked-files=normal \
         --branch \
       && break
     done
