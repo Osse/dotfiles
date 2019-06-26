@@ -39,6 +39,9 @@
 	alias = config --get-regexp \"^alias\\.\"
 	fixup = commit --fixup
 	squash = commit --squash
+	f = fetch
+	pulled = log @{1}..@
+	fetched = log @{u}@{1}..@{u}
 [push]
 	default = simple
 [sendemail]
