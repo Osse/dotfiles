@@ -111,7 +111,8 @@ zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
 (( $+terminfo[cbt] )) && bindkey $terminfo[cbt] reverse-menu-complete
-bindkey '^R' history-incremental-pattern-search-backward
+zle -N fzy-history
+bindkey '^R' fzy-history
 
 # Code for sane binding of keys and handling of terminal modes {{{
 # Adapted from Debian's /etc/zshrc
@@ -292,6 +293,3 @@ function sprunge() {
 # }}}
 
 # vim: foldmethod=marker foldlevel=0
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,0 +1,7 @@
+local line
+echo
+if line=$(fc -rl 1 | fzy --query=${BUFFER} --prompt='bck-i-search: '); then
+    zle vi-fetch-history -n ${${(z)line}[1]}
+fi
+print -n ${terminfo[cuu1]}
+zle reset-prompt
