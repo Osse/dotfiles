@@ -33,6 +33,8 @@ for bin in /c/tools/neovim/nvim-win64/bin /c/ProgramData/chocolatey/bin "/c/Prog
 done
 
 export MANPATH="/mingw64/share/man:$MANPATH"
+export MSYS2_ARG_CONV_EXCL=':/*'
+export COLUMNS
 {{ end }}
 
 unset -f prefix_path
