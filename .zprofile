@@ -3,6 +3,8 @@ export SUDO_EDITOR=vim
 export EDITOR=vim
 export BROWSER=firefox
 export GCC_COLORS=1
+export MSYS2_ARG_CONV_EXCL=':/*'
+export COLUMNS
 
 # Add stuff to PATH
 path=( /mingw64/bin $HOME/bin $HOME/.gem/ruby/2.1.0/bin $HOME/.cargo/bin $path )
