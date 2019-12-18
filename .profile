@@ -12,6 +12,8 @@ export SUDO_EDITOR=$EDITOR
 export BROWSER=firefox
 export GCC_COLORS=1
 export CARGO_TARGET_DIR=$HOME/.cache/cargo_target_dir
+export MSYS2_ARG_CONV_EXCL=':/*'
+export COLUMNS
 
 prefix_path() {
     case ":$PATH:" in

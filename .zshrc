@@ -30,7 +30,7 @@ zstyle ':completion:tmux-complete-WORD:*' ignore-line current
 zstyle ':completion:tmux-complete-WORD:*' menu yes select
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
 zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
-zstyle ':bracketed-paste-magic' paste-finish makegitrelative url-magic
+zstyle ':bracketed-paste-magic' paste-finish makegitrelative makecygpath url-magic
 
 # Autoload functions
 fpath=( ~/.zfunctions $fpath )

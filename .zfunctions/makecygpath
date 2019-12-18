@@ -1,0 +1,6 @@
+if [[ $PASTED = [A-Za-z]:[\\/]* ]]; then
+    PASTED="$(cygpath "$PASTED")"
+    return 1
+else
+    return 0
+fi
