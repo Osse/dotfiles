@@ -14,7 +14,7 @@ ls --color $files
 
 print_help() {
     print -P '%B'
-    print -c 'v: Vim' 'l: less' 'h: head' \
+    print -c 'v: Vim' 'l: less' 'h: head' 'c: cat' \
         "n: no/next (don't delete)" '[yd]: yes/delete' \
         'D: delete all' 'q: quit' 'Q: quit and delete selected' '?: Show help'
     print -P '%b'
@@ -28,22 +28,23 @@ prompt() {
 nukes=()
 
 for f in $files; do
-    read -k 1 "action?${(%):-%B$f:%b} "
-    echo
-    case $action in
-        v) vim -- $f                ;;
-        l) less -- $f               ;;
-        h) head -- $f               ;;
-        [yd]) nukes+=($f); continue ;;
-        D) nukes=( $files ); break  ;;
-        n) continue                 ;;
-        q) return 1                 ;;
-        Q) break                    ;;
-        \?) print_help              ;;
-        *) :                        ;;
-    esac
-    prompt 'Delete? ' && nukes+=($f)
-    echo
+    while true; do
+        read -k 1 "action?${(%):-%B$f:%b} "
+        echo
+        case $action in
+            v) vim -- $f                  ;;
+            l) less -- $f                 ;;
+            h) head -- $f                 ;;
+            c) cat -- $f                  ;;
+            [yd]) nukes+=($f); break      ;;
+            D) nukes=( $files ); break 2  ;;
+            n) break                      ;;
+            q) return 1                   ;;
+            Q) break 2                    ;;
+            \?) print_help                ;;
+            *) :                          ;;
+        esac
+    done
 done
 
 echo
