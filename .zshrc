@@ -184,11 +184,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
         printf '%s' ${terminfo[rmkx]}
     }
     zle -N zle-line-finish
-else
-    for i in {s,r}mkx; do
-        (( ${+terminfo[$i]} )) || debian_missing_features+=($i)
-    done
-    unset i
 fi
 
 unfunction bind2maps
@@ -289,6 +284,10 @@ function copy() {
 function sprunge() {
     curl -sF 'sprunge=<-' http://sprunge.us | tr -d '\n'
     echo ${1:+\?$1}
+}
+
+function ix() {
+    curl -F 'f:1=<-' ix.io
 }
 # }}}
 
