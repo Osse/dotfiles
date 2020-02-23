@@ -18,11 +18,9 @@ zstyle ':completion:*' prompt 'Errors: %e'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' verbose true
 zstyle ':completion:tmux-complete:*' completer tmux_complete
-zstyle ':completion:tmux-complete:*' ignore-line current
-zstyle ':completion:tmux-complete:*' menu yes select
 zstyle ':completion:tmux-complete-path:*' completer tmux_complete_path
-zstyle ':completion:tmux-complete-path:*' ignore-line current
-zstyle ':completion:tmux-complete-path:*' menu yes select
+zstyle ':completion:tmux-complete*:*' ignore-line current
+zstyle ':completion:tmux-complete*:*' menu yes select
 zstyle ':completion::complete:-tilde-::' tag-order '! users'
 zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 zstyle ':bracketed-paste-magic' paste-finish makegitrelative url-magic
