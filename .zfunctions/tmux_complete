@@ -1,3 +1,5 @@
+[[ $TMUX ]] || return 1
+
 local -A panes
 panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
 
