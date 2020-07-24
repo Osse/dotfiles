@@ -81,13 +81,17 @@ function chpwd() {
 }
 chpwd
 
-case $HOST in
-    bigge)      hostcolor=215 ;;
-    snyltevm)   hostcolor=81  ;;
-    worklappie) hostcolor=191 ;;
-    lappie)     hostcolor=206 ;;
-    *)          hostcolor=1
-esac
+if (( $+SSH_CONNECTION )); then
+    hostcolor=215
+else
+    case $HOST in
+        bigge)      hostcolor=215 ;;
+        snyltevm)   hostcolor=81  ;;
+        worklappie) hostcolor=191 ;;
+        lappie)     hostcolor=206 ;;
+        *)          hostcolor=1
+    esac
+fi
 psvar[3]=$hostcolor
 
 git_prompt='%(11V.%F{72}[%f%18v%F{green}%12v%f%F{yellow}%13v%f%14v%F{72}%11v%f%F{40}%15v%f%F{214}%16v%f%F{red}%17v%f%F{72}]%f.)'
