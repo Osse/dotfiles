@@ -257,7 +257,6 @@ zle -N zle-keymap-select indicate-mode
 
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
-zle -N zle-line-finish
 
 # Other functions {{{
 
