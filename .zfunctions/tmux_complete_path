@@ -1,15 +1,33 @@
-[[ $TMUX ]] || return 1
-
-local -A panes
-panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
-
 local -a words paths git_paths
+local term
 
-words=(${(f)"$(
-    for pane active in ${(kv)panes}; do
-        tmux capture-pane -J -p -t $pane
-    done | grep -o '~\?[[:alnum:]/._]\+'
-)"})
+if [[ $TMUX ]]; then
+    term="tmux panes"
+
+    local -A panes
+    panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
+
+    words=(${(f)"$(
+        for pane active in ${(kv)panes}; do
+            tmux capture-pane -J -p -t $pane
+        done | grep -o '~\?[[:alnum:]/._]\+'
+    )"})
+elif [[ $KITTY_WINDOW_ID ]]; then
+    term="kitty windows"
+
+    local -A windows
+    windows=($(kitty @ ls | jq -r '.[].tabs[] | select(.is_focused) | .windows[] | "\(.id) \(if .is_focused then 1 else 0 end)"'))
+
+    words=(${(f)"$(
+        for id active in ${(kv)windows}; do
+            if (( active )); then
+                kitty @ get-text --match id:$id | sed '/^$/d' | head -n -1
+            else
+                kitty @ get-text --match id:$id
+            fi
+        done | grep -o '~\?[[:alnum:]/._]\+'
+    )"})
+fi
 
 for w in $words; do
     w=${w%/}
@@ -21,7 +39,8 @@ for w in $words; do
     fi
 done
 
-local desc='paths from visible tmux panes'
+local desc="paths from visible $term"
 _wanted values expl $desc compadd -Q -a paths
 (( $#git_paths )) && _wanted values expl $desc compadd -P "$(git rev-parse --show-cdup 2>/dev/null)" -Q -a git_paths
+_wanted values expl $desc compadd -Q -a git_paths
 bindkey -M menuselect '^P' menu-complete
