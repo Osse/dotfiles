@@ -66,3 +66,5 @@
 	lineNumber = true
 [diff "sqlitediffdriver"]
 	command = sqlitediffdriver
+[diff "regdiffdriver"]
+	command = regdiffdriver
