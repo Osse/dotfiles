@@ -1,0 +1,16 @@
+local -A panes
+panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
+
+local -a words
+words=(${(f)"$(
+    for pane active in ${(kv)panes}; do
+        if (( active )); then
+            tmux capture-pane -J -p -t $pane | sed '/^$/d' | head -n -1
+        else
+            tmux capture-pane -J -p -t $pane
+        fi
+    done | grep -o '[^[:space:]]\+'
+)"})
+
+_wanted values expl 'WORDS from visible tmux panes' compadd -a words
+bindkey -M menuselect '^T' menu-complete

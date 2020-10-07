@@ -1,0 +1,24 @@
+local -A panes
+panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
+
+hashes=(${(f)"$(
+    for pane active in ${(kv)panes}; do
+        tmux capture-pane -J -p -t $pane
+    done | grep -o -E '\<'"$words[$CURRENT]"'[0-9a-f]{3,}(\.\.[0-9a-f]{4,})?'
+)"})
+
+for h in $hashes; do
+    if [[ $h = *..* ]]; then
+        if git rev-parse --quiet --verify ${h%..*} >/dev/null &&
+           git rev-parse --quiet --verify ${h#*..} >/dev/null; then
+            commits+=($h)
+        fi
+    else
+        if git rev-parse --quiet --verify $h >/dev/null; then
+            commits+=($h)
+        fi
+    fi
+done
+
+_wanted values expl 'commits from visible tmux panes' compadd -Q -a commits
+bindkey -M menuselect '^G' menu-complete
