@@ -117,8 +117,12 @@ zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
 (( $+terminfo[cbt] )) && bindkey $terminfo[cbt] reverse-menu-complete
-zle -N fzy-history
-bindkey '^R' fzy-history
+if [[ -x fzy ]]; then
+    zle -N fzy-history
+    bindkey '^R' fzy-history
+else
+    bindkey '^R' history-incremental-pattern-search-backward
+fi
 
 # Code for sane binding of keys and handling of terminal modes {{{
 # Adapted from Debian's /etc/zshrc
