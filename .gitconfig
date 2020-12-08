@@ -9,6 +9,8 @@
 	editor = nvim
 	excludesfile = ~/.gitignore
 	pager = less -FSRX
+	eol = native
+	autocrlf = true
 [log]
 	decorate = true
 	mailmap = true
