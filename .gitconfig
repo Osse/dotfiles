@@ -64,3 +64,5 @@
 	autosquash = true
 [grep]
 	lineNumber = true
+[diff "sqlitediffdriver"]
+	command = sqlitediffdriver
