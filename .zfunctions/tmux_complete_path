@@ -3,21 +3,25 @@
 local -A panes
 panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
 
-local -a words
+local -a words paths git_paths
+
 words=(${(f)"$(
     for pane active in ${(kv)panes}; do
         tmux capture-pane -J -p -t $pane
     done | grep -o '~\?[[:alnum:]/._]\+'
 )"})
 
-local -a paths
 for w in $words; do
-    w=${w#[ab]/}
     w=${w%/}
-    if [[ -e $w ]] || [[ $w = '~/'* && -e "$HOME${w#\~}" ]]; then
-            paths+=($w)
+    if [[ $w = [ab]/* ]]; then # Output from git diff etc.
+        w=${w#[ab]/}
+        git_paths+=($w)
+    elif [[ -e $w ]] || [[ $w = '~/'* && -e "$HOME${w#\~}" ]]; then
+        paths+=($w)
     fi
 done
 
-_wanted values expl 'paths from visible tmux panes' compadd -Q -a paths
+local desc='paths from visible tmux panes'
+_wanted values expl $desc compadd -Q -a paths
+(( $#git_paths )) && _wanted values expl $desc compadd -P "$(git rev-parse --show-cdup 2>/dev/null)" -Q -a git_paths
 bindkey -M menuselect '^P' menu-complete
