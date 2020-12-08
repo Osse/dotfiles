@@ -331,4 +331,13 @@ wcd() {
     cd "$(cygpath $1)"
 }
 
+vim-insert-impl() { CURSOR=0; zle .vi-insert; CURSOR=$1; }
+
+vim-insert() { vim-insert-impl $CURSOR }
+vim-add-next() { vim-insert-impl $((CURSOR + 1)) }
+vim-add-eol() { vim-insert-impl $#BUFFER }
+zle -N vi-insert vim-insert
+zle -N vi-add-next vim-add-next
+zle -N vi-add-eol vim-add-eol
+
 # vim: foldmethod=marker foldlevel=0
