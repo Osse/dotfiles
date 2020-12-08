@@ -156,25 +156,19 @@ function bind2maps () {
     done
 }
 
-bind2maps emacs             -- BackSpace   backward-delete-char
-bind2maps       viins       -- BackSpace   vi-backward-delete-char
-bind2maps             vicmd -- BackSpace   vi-backward-char
-bind2maps emacs             -- Home        beginning-of-line
-bind2maps       viins vicmd -- Home        vi-beginning-of-line
-bind2maps emacs             -- End         end-of-line
-bind2maps       viins vicmd -- End         vi-end-of-line
-bind2maps emacs viins       -- Insert      overwrite-mode
-bind2maps             vicmd -- Insert      vi-insert
-bind2maps emacs             -- Delete      delete-char
-bind2maps       viins vicmd -- Delete      vi-delete-char
-bind2maps emacs viins vicmd -- Up          history-beginning-search-backward
-bind2maps emacs viins vicmd -- Down        history-beginning-search-forward
-bind2maps emacs             -- Left        backward-char
-bind2maps       viins vicmd -- Left        vi-backward-char
-bind2maps emacs             -- Right       forward-char
-bind2maps       viins vicmd -- Right       vi-forward-char
-bind2maps       viins vicmd -- PageUp      ''
-bind2maps       viins vicmd -- PageDown    ''
+bind2maps viins       -- BackSpace   vi-backward-delete-char
+bind2maps       vicmd -- BackSpace   vi-backward-char
+bind2maps viins vicmd -- Home        vi-beginning-of-line
+bind2maps viins vicmd -- End         vi-end-of-line
+bind2maps viins       -- Insert      overwrite-mode
+bind2maps       vicmd -- Insert      vi-insert
+bind2maps viins vicmd -- Delete      vi-delete-char
+bind2maps viins vicmd -- Up          history-beginning-search-backward
+bind2maps viins vicmd -- Down        history-beginning-search-forward
+bind2maps viins vicmd -- Left        vi-backward-char
+bind2maps viins vicmd -- Right       vi-forward-char
+bind2maps viins vicmd -- PageUp      ''
+bind2maps viins vicmd -- PageDown    ''
 
 # Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
