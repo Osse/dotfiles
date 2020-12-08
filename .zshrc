@@ -312,6 +312,16 @@ hash -d g=/c/git
 hash -d w=/c/git/walle
 hash -d c=/c/git/cpp
 
+work() {
+    local date title dir
+    date=$(date +%Y-%m-%d)
+    title=$*
+    title=${title// /-}
+    dir=/c/work/$date-$title
+
+    mkdir $dir && cd $dir
+    qopen .
+}
 qopen() {
     local windir
     windir=$(cygpath -wa ${1:-$PWD} | sed 's:/:\\:g')
