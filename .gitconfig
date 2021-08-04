@@ -72,4 +72,4 @@
 [diff "sqlitediffdriver"]
 	command = sqlitediffdriver
 [diff "regdiffdriver"]
-	command = regdiffdriver
+	textconv = iconv -f UTF-16LE -t UTF-8 "$@" | dos2unix && :
