@@ -121,7 +121,10 @@ zle -N rationalise-dot
 bindkey '.' rationalise-dot
 
 (( $+terminfo[cbt] )) && bindkey $terminfo[cbt] reverse-menu-complete
-if [[ -x fzy ]]; then
+
+if [[ -x ~/.fzf/bin/fzf ]] && [[ -e ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+elif [[ -x fzy ]]; then
     zle -N fzy-history
     bindkey '^R' fzy-history
 else
