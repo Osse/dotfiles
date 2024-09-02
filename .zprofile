@@ -6,5 +6,5 @@ export GCC_COLORS=1
 export CARGO_TARGET_DIR=$HOME/dev/cargo_target_dir
 
 # Add stuff to PATH
-path=( $HOME/bin $HOME/.gem/ruby/2.1.0/bin $HOME/.cargo/bin $HOME/.fzf/bin $path )
+path=( $HOME/bin $HOME/.local/bin $HOME/.cargo/bin $HOME/.fzf/bin $path )
 typeset -U path
