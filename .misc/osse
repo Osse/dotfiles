@@ -1,15 +1,14 @@
 // based on a keyboard map from an 'xkb/symbols/no' file
-// Norwegian Øsse's Vim layout
+// Norwegian Osse's Vim layout
 default  partial alphanumeric_keys
-partial alphanumeric_keys
-xkb_symbols "vimlayout" {
+xkb_symbols "osse" {
 
     // Modifies the basic Norwegian layout to add movement
     // and braces/brackets to useful keys
 
     include "no(basic)"
 
-    name[Group1]="Norway - Vim";
+    name[Group1]="Norwegian (Osse)";
 
     key <AD01> { [ q,      Q,      asciitilde,    Greek_OMEGA ] };
     key <AD02> { [ w,      W,      Up,            Lstroke     ] };
