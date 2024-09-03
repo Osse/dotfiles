@@ -305,4 +305,8 @@ function ix() {
 }
 # }}}
 
+# Zivid stuff
+VIRTUAL_ENV_DISABLE_PROMPT=1
+source ~/venv/bin/activate
+
 # vim: foldmethod=marker foldlevel=0
