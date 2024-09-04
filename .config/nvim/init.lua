@@ -104,3 +104,6 @@ nnoremap ' `
 nnoremap ` '
 nnoremap <leader>q gqap
 ]])
+
+-- Fix for VIRTUAL_ENV
+vim.g.python3_host_prog = '/home/oystein-w/venv/bin/python'
