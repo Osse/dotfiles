@@ -133,3 +133,6 @@ vim.g.startify_bookmarks = {
 }
 vim.g.startify_change_to_dir = 0
 vim.g.startify_change_to_vcs_root = 1
+
+-- Fix for VIRTUAL_ENV
+vim.g.python3_host_prog = '/home/oystein-w/venv/bin/python'
