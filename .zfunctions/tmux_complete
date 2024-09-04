@@ -3,35 +3,11 @@ local term
 
 if [[ $TMUX ]]; then
     term="tmux panes"
-
-    local -A panes
-    panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
-
-    words=(${(f)"$(
-        for pane active in ${(kv)panes}; do
-            if (( active )); then
-                tmux capture-pane -J -p -t $pane | sed '/^$/d' | head -n -1
-            else
-                tmux capture-pane -J -p -t $pane
-            fi
-        done | grep -o '\<\w\+\>'
-    )"})
 elif [[ $KITTY_WINDOW_ID ]]; then
     term="kitty windows"
-
-    local -A windows
-    windows=($(kitty @ ls | jq -r '.[].tabs[] | select(.is_focused) | .windows[] | "\(.id) \(if .is_focused then 1 else 0 end)"'))
-
-    words=(${(f)"$(
-        for id active in ${(kv)windows}; do
-            if (( active )); then
-                kitty @ get-text --match id:$id | sed '/^$/d' | head -n -1
-            else
-                kitty @ get-text --match id:$id
-            fi
-        done | grep -o '\<\w\+\>'
-    )"})
 fi
+
+words=(${(f)"$(get_words | grep -o '\<\w\+\>')"})
 
 _wanted values expl "words from visible $term" compadd -a words
 bindkey -M menuselect '^T' menu-complete
