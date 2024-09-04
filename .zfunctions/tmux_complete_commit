@@ -1,11 +1,14 @@
-local -A panes
-panes=($(tmux list-panes -F '#{pane_index} #{pane_active}'))
+local -a hashes
+local -a commits
+local term
 
-hashes=(${(f)"$(
-    for pane active in ${(kv)panes}; do
-        tmux capture-pane -J -p -t $pane
-    done | grep -o -E '\<'"$words[$CURRENT]"'[0-9a-f]{3,}(\.\.[0-9a-f]{4,})?'
-)"})
+if [[ $TMUX ]]; then
+    term="tmux panes"
+elif [[ $KITTY_WINDOW_ID ]]; then
+    term="kitty windows"
+fi
+
+hashes=(${(f)"$(get_words |grep -o -E '\<'"$words[$CURRENT]"'[0-9a-f]{3,}(\.\.[0-9a-f]{4,})?')"})
 
 for h in $hashes; do
     if [[ $h = *..* ]]; then
@@ -20,5 +23,5 @@ for h in $hashes; do
     fi
 done
 
-_wanted values expl 'commits from visible tmux panes' compadd -Q -a commits
+_wanted values expl "commits from visible $term" compadd -Q -a commits
 bindkey -M menuselect '^G' menu-complete
