@@ -108,3 +108,17 @@ nnoremap <leader>q gqap
 
 -- Fix for VIRTUAL_ENV
 vim.g.python3_host_prog = '/home/oystein-w/venv/bin/python'
+
+-- Startify
+vim.g.startify_relative_path = 1
+-- vim.g.startify_skiplist = [ 'COMMIT_EDITMSG$', '\('.escape($VIMRUNTIME, '\').'\|bundle/.*\)/doc/.*\.txt$' ]
+vim.g.startify_bookmarks = {
+    { ['m'] = '~/.vim/vimrc' },
+    { ['n'] = '~/.config/nvim/init.lua' },
+    { ['i'] = '~/.i3/config' },
+    { ['z'] = '~/.zshrc' },
+    { ['b'] = '~/.bashrc' },
+    { ['g'] = '~/.gitconfig' },
+}
+vim.g.startify_change_to_dir = 0
+vim.g.startify_change_to_vcs_root = 1
