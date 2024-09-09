@@ -23,6 +23,7 @@ Plug('PotatoesMaster/i3-vim-syntax')
 Plug('PProvost/vim-ps1')
 Plug('rust-lang/rust.vim')
 Plug('cespare/vim-toml', { ['branch'] = 'main' })
+Plug('fladson/vim-kitty')
 vim.call('plug#end')
 
 vim.g.jellybeans_overrides = {
