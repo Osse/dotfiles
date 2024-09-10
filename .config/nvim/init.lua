@@ -104,6 +104,9 @@ nnoremap <silent> <C-l> :noh<CR><C-l>
 nnoremap ' `
 nnoremap ` '
 nnoremap <leader>q gqap
+
+nnoremap <C-P> :GFiles<CR>
+nnoremap Q :Buffers<CR>
 ]])
 
 -- Startify
