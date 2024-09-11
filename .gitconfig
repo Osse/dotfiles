@@ -6,7 +6,7 @@
 	tool = vimdiff
 	orderFile = ~/.gitdifforder
 [core]
-	editor = vim </dev/tty
+	editor = nvim
 	excludesfile = ~/.gitignore
 	pager = less -FSRX
 [log]

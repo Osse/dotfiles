@@ -1,30 +1,55 @@
-vim.opt.runtimepath:prepend("~/.vim")
-vim.opt.runtimepath:append("~/.vim/after")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Start Plug
-local vim = vim
-local Plug = vim.fn['plug#']
+vim.g.mapleader = "ø"
+vim.g.maplocalleader = "æ"
 
-vim.call('plug#begin')
-Plug('tpope/vim-surround')
-Plug('tomtom/tcomment_vim')
-Plug('godlygeek/tabular')
-Plug('SirVer/ultisnips')
-Plug('honza/vim-snippets')
-Plug('junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --all' })
-Plug('junegunn/fzf.vim')
-Plug('tpope/vim-repeat')
-Plug('tpope/vim-fugitive')
-Plug('Osse/double-tap')
-Plug('nanotech/jellybeans.vim')
-Plug('mhinz/vim-startify')
-Plug('richq/vim-cmake-completion')
-Plug('PotatoesMaster/i3-vim-syntax')
-Plug('PProvost/vim-ps1')
-Plug('rust-lang/rust.vim')
-Plug('cespare/vim-toml', { ['branch'] = 'main' })
-Plug('fladson/vim-kitty')
-vim.call('plug#end')
+-- Setup lazy.nvim
+require("lazy").setup({
+    spec = {
+        { 'tpope/vim-surround' },
+        { 'tomtom/tcomment_vim' },
+        { 'godlygeek/tabular' },
+        { 'SirVer/ultisnips' },
+        { 'honza/vim-snippets' },
+        {
+            'junegunn/fzf.vim',
+            dependencies =  {
+                { 'junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --all' } }
+            }
+        },
+        { 'tpope/vim-repeat' },
+        { 'tpope/vim-fugitive' },
+        { 'Osse/double-tap' },
+        { 'nanotech/jellybeans.vim' },
+        { 'mhinz/vim-startify' },
+        { 'richq/vim-cmake-completion' },
+        { 'PotatoesMaster/i3-vim-syntax' },
+        { 'PProvost/vim-ps1' },
+        { 'rust-lang/rust.vim' },
+        -- 'cespare/vim-toml', { ['branch'] = 'main' },
+        { 'fladson/vim-kitty' },
+    },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "jellybeans" } },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
+})
 
 vim.g.jellybeans_overrides = {
     ['StatusLine'] = { ['attr'] = 'bold' },
@@ -68,7 +93,6 @@ vim.opt.undofile = true
 
 -- Mappings
 vim.cmd([[
-let mapleader="ø"
 nnoremap !         ?
 nnoremap S         /
 nnoremap <Space>   <C-W><C-W>
