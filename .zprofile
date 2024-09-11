@@ -1,6 +1,6 @@
 # Environment variables
-export SUDO_EDITOR=vim
-export EDITOR=vim
+export SUDO_EDITOR=nvim
+export EDITOR=nvim
 export BROWSER=firefox
 export GCC_COLORS=1
 export CARGO_TARGET_DIR=$HOME/dev/cargo_target_dir
