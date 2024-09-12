@@ -58,13 +58,9 @@ vim.g.jellybeans_overrides = {
 vim.cmd.colorscheme("jellybeans")
 
 -- Options
-vim.opt.ruler = true
 vim.opt.suffixes = '.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc'
-vim.opt.backspace = 'indent,eol,start'
-vim.opt.history = 50
 vim.opt.sessionoptions:remove({'options', 'blank', 'winsize' })
 vim.opt.sessionoptions:append('winpos')
-vim.opt.autoindent = true
 vim.opt.linebreak = true
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -72,19 +68,12 @@ vim.opt.expandtab = true
 vim.opt.foldmethod = 'syntax'
 vim.opt.foldlevelstart = 99
 vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.showcmd = true
 vim.opt.showmatch = true
 vim.opt.wildmode = 'list:longest'
-vim.opt.hidden = true
-vim.opt.joinspaces = false
 vim.opt.completeopt:remove('preview')
 vim.opt.cinoptions:append('(0,u0,g0,N-s')
 vim.opt.pastetoggle = '<F4>'
 vim.opt.showbreak = '>\\'
-vim.opt.laststatus = 2
-vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 100
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.wrap = false
@@ -96,7 +85,6 @@ vim.cmd([[
 nnoremap !         ?
 nnoremap S         /
 nnoremap <Space>   <C-W><C-W>
-map      Y         y$
 noremap  ZA        :qa!<CR>
 noremap  ¤         $
 noremap  æ         ^
