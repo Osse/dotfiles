@@ -308,9 +308,7 @@ function ix() {
 
 # stuff
 
-hash -d g=/c/git
-hash -d w=/c/git/walle
-hash -d c=/c/git/cpp
+hash -d c=/c/zivid/zivid-sdk
 
 work() {
     local date title dir
