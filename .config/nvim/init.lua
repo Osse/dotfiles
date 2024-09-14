@@ -116,9 +116,6 @@ nnoremap <C-P> :GFiles<CR>
 nnoremap Q :Buffers<CR>
 ]])
 
--- Fix for VIRTUAL_ENV
-vim.g.python3_host_prog = '/home/oystein-w/venv/bin/python'
-
 -- Startify
 vim.g.startify_relative_path = 1
 -- vim.g.startify_skiplist = [ 'COMMIT_EDITMSG$', '\('.escape($VIMRUNTIME, '\').'\|bundle/.*\)/doc/.*\.txt$' ]
