@@ -72,7 +72,6 @@ vim.opt.showmatch = true
 vim.opt.wildmode = 'list:longest'
 vim.opt.completeopt:remove('preview')
 vim.opt.cinoptions:append('(0,u0,g0,N-s')
-vim.opt.pastetoggle = '<F4>'
 vim.opt.showbreak = '>\\'
 vim.opt.splitright = true
 vim.opt.splitbelow = true
