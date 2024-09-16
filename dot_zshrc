@@ -1,4 +1,4 @@
-# Completion {{{
+# Completion [[[
 zstyle ':completion:*' completer _expand _complete _ignored
 zstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' file-sort name
@@ -38,31 +38,31 @@ autoload ~/.zfunctions/[^_]*(.:t)
 autoload -U compinit
 compinit -i
 compdef -d users
-# }}}
+# ]]]
 
-# History {{{
+# History [[[
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-# }}}
+# ]]]
 
-# Options {{{
+# Options [[[
 setopt append_history    \
        extended_glob     \
        auto_cd           \
        cdable_vars       \
        transient_rprompt \
        hist_ignore_dups
-# }}}
+# ]]]
 
-# TERM {{{
+# TERM [[[
 # This is apparently a mad thing, but gnome-terminal :(
 if [[ $TERM = xterm ]]; then
      TERM="xterm-256color"
 fi
-# }}}
+# ]]]
 
-# Prompt {{{
+# Prompt [[[
 
 function precmd() {
     (( title_set )) || print -nP "\033]0;${SSH_CONNECTION:+SSH: }%n@%m:%~\007"
@@ -97,9 +97,9 @@ psvar[3]=$hostcolor
 git_prompt='%(11V.%F{72}[%f%18v%F{green}%12v%f%F{yellow}%13v%f%14v%F{72}%11v%f%F{40}%15v%f%F{214}%16v%f%F{red}%17v%f%F{72}]%f.)'
 #                       [   a  up             down            sp  branch      staged      unstaged     untracked    end   ]
 PS1="%B%F{green}%n%f@%F{%3v}%m%f:%F{blue}%1v%b$git_prompt%(1j. %F{87}%j%f .)%f%(?..%F{red})$%f "
-# }}}
+# ]]]
 
-# Keybindings {{{
+# Keybindings [[[
 bindkey -v
 KEYTIMEOUT=5
 
@@ -131,7 +131,7 @@ else
     bindkey '^R' history-incremental-pattern-search-backward
 fi
 
-# Code for sane binding of keys and handling of terminal modes {{{
+# Code for sane binding of keys and handling of terminal modes [[[
 # Adapted from Debian's /etc/zshrc
 typeset -A key
 key=( BackSpace  "${terminfo[kbs]}"
@@ -225,10 +225,10 @@ bindkey '^X^P' tmux-complete-path
 bindkey '^X^G' tmux-complete-commit
 bindkey '^X^W' tmux-complete-WORD
 
-# }}}
-# }}}
+# ]]]
+# ]]]
 
-# Aliases {{{
+# Aliases [[[
 alias -g L='| less'
 alias -g N1='> /dev/null'
 alias -g N2='2> /dev/null'
@@ -249,21 +249,21 @@ alias q='exit'
 alias v='$EDITOR'
 alias vimrc='$EDITOR ~/.config/nvim/init.lua'
 alias zshrc='$EDITOR ~/.zshrc'
-# }}}
+# ]]]
 
-#  Mode indication {{{
+#  Mode indication [[[
 function indicate-mode {
     RPS1="%B${${KEYMAP/vicmd/n}/(main|viins)/i}%b"
     RPS2=$RPS1
     zle reset-prompt
 }
 zle -N zle-keymap-select indicate-mode
-# }}}
+# ]]]
 
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 
-# Other functions {{{
+# Other functions [[[
 
 function g() {
     if ((  $# )); then
@@ -303,6 +303,6 @@ function sprunge() {
 function ix() {
     curl -F 'f:1=<-' ix.io
 }
-# }}}
+# ]]]
 
-# vim: foldmethod=marker foldlevel=0
+# vim: foldmethod=marker foldmarker=[[[,]]] foldlevel=0
