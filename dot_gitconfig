@@ -3,7 +3,7 @@
 [color]
 	ui = auto
 [diff]
-	tool = vimdiff
+	tool = nvimdiff
 	orderFile = ~/.gitdifforder
 [core]
 	editor = nvim
@@ -53,7 +53,7 @@
 	cmd = vdwrap $LOCAL $REMOTE
 [merge]
 	defaultToUpstream = true
-	tool = vimdiff
+	tool = nvimdiff
 [pager]
 	status = true
 [pull]

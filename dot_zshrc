@@ -246,9 +246,9 @@ alias man='noglob man'
 alias p='print -r'
 alias pl='print -rl'
 alias q='exit'
-alias v='nvim'
-alias vimrc='vim ~/.vim/vimrc'
-alias zshrc='vim ~/.zshrc'
+alias v='$EDITOR'
+alias vimrc='$EDITOR ~/.config/nvim/init.lua'
+alias zshrc='$EDITOR ~/.zshrc'
 # }}}
 
 #  Mode indication {{{
@@ -279,7 +279,7 @@ function ls grep egrep fgrep {
 }
 
 function :he :h :help {
-    vim +"help $1" +only +'map q ZQ'
+    nvim +"help $1" +only +'map q ZQ'
 }
 
 function mkcd() {
