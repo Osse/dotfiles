@@ -238,6 +238,7 @@ alias fullname='readlink -f'
 alias c=cargo
 alias cm=cmake
 alias help='run-help'
+alias j='just'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -al'
