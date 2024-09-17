@@ -305,4 +305,10 @@ function ix() {
 }
 # ]]]
 
+{{ if eq .chezmoi.hostname "oystein-w-KomplettPC" }}
+# Zivid stuff
+VIRTUAL_ENV_DISABLE_PROMPT=1
+source ~/venv/bin/activate
+{{ end }}
+
 # vim: foldmethod=marker foldmarker=[[[,]]] foldlevel=0
