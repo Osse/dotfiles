@@ -22,7 +22,6 @@ vim.g.maplocalleader = "æ"
 require("lazy").setup({
     spec = {
         { 'tpope/vim-surround' },
-        { 'tomtom/tcomment_vim' },
         { 'godlygeek/tabular' },
         { 'SirVer/ultisnips' },
         { 'honza/vim-snippets' },
@@ -43,6 +42,19 @@ require("lazy").setup({
         { 'rust-lang/rust.vim' },
         -- 'cespare/vim-toml', { ['branch'] = 'main' },
         { 'fladson/vim-kitty' },
+        {
+            'nvim-treesitter/nvim-treesitter',
+            build = ':TSUpdate',
+            config = function ()
+                local configs = require("nvim-treesitter.configs")
+                configs.setup({
+                  ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", },
+                  sync_install = false,
+                  highlight = { enable = true },
+                  indent = { enable = true },
+                })
+            end
+        }
     },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
