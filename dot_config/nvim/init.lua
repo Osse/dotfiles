@@ -40,7 +40,10 @@ require("lazy").setup({
         { 'PotatoesMaster/i3-vim-syntax' },
         { 'PProvost/vim-ps1' },
         { 'rust-lang/rust.vim' },
-        -- 'cespare/vim-toml', { ['branch'] = 'main' },
+        {
+            'cespare/vim-toml',
+            branch = 'main'
+        },
         { 'fladson/vim-kitty' },
         {
             'nvim-treesitter/nvim-treesitter',
