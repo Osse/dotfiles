@@ -24,7 +24,7 @@ prefix_path() {
 }
 
 for bin in .fzf/bin .cargo/bin .local/*/bin .local/bin; do
-    [ -d "$bin" ] || continue
+    [ -d "$HOME/$bin" ] || continue
     prefix_path "$HOME/$bin"
 done
 
