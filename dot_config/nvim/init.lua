@@ -54,6 +54,16 @@ require("lazy").setup({
                   indent = { enable = true },
                 })
             end
+        },
+        {
+            'mikesmithgh/kitty-scrollback.nvim',
+            enabled = true,
+            lazy = true,
+            cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+            event = { 'User KittyScrollbackLaunch' },
+            config = function()
+                require('kitty-scrollback').setup()
+            end,
         }
     },
   -- Configure any other settings here. See the documentation for more details.
