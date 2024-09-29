@@ -40,10 +40,6 @@ require("lazy").setup({
         { 'PotatoesMaster/i3-vim-syntax' },
         { 'PProvost/vim-ps1' },
         { 'rust-lang/rust.vim' },
-        {
-            'cespare/vim-toml',
-            branch = 'main'
-        },
         { 'fladson/vim-kitty' },
         {
             'nvim-treesitter/nvim-treesitter',
@@ -51,7 +47,7 @@ require("lazy").setup({
             config = function ()
                 local configs = require("nvim-treesitter.configs")
                 configs.setup({
-                  ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", },
+                  ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", "toml", "yaml" },
                   sync_install = false,
                   highlight = { enable = true },
                   indent = { enable = true },
