@@ -153,6 +153,9 @@ vcs-get-data:data:misc() {
     tmpa=( ${(@M)status##[12] ?[ACDMRU] *} )
     rc_vcs_data[unstaged]=$#tmpa
 
+    tmpa=( ${(@M)status##u ?[ACDMRU] *} )
+    rc_vcs_data[unmerged]=$#tmpa
+
   # Porcelain v1
   elif [[ $status[1] == '## '* ]]; then
     tmp=${status[1]##\#\# }
@@ -278,7 +281,8 @@ vcs-get-data:psvar() {
   (( rc_vcs_data[staged] )) && psvar[15]=•
   (( rc_vcs_data[unstaged] )) && psvar[16]=•
   (( rc_vcs_data[untracked] )) && psvar[17]=•
-  [[ -n $rc_vcs_data[action] ]] && psvar[18]=${rc_vcs_data[action]}' '
+  (( rc_vcs_data[unmerged] )) && psvar[18]=X
+  [[ -n $rc_vcs_data[action] ]] && psvar[19]=${rc_vcs_data[action]}' '
 
   return 0
 }
@@ -306,9 +310,10 @@ vcs-get-data() {
     staged    0
     unstaged  0
     untracked 0
+    unmerged 0
   )
   rc_vcs_rprompt=( )
-  for i in {11..18}; do psvar[$i]=; done
+  for i in {11..19}; do psvar[$i]=; done
 
   vcs-get-data:data:git-dir || return 1
   vcs-get-data:data:action   # OK to fail
