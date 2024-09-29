@@ -23,9 +23,8 @@ prefix_path() {
     esac
 }
 
-for bin in .fzf/bin .cargo/bin .local/*/bin .local/bin; do
-    [ -d "$HOME/$bin" ] || continue
-    prefix_path "$HOME/$bin"
+for bin in $HOME/.fzf/bin $HOME/.cargo/bin $HOME/.local/*/bin $HOME/.local/bin; do
+    [ -d "$bin" ] && prefix_path "$bin"
 done
 
 unset -f prefix_path
