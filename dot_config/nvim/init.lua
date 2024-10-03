@@ -214,6 +214,32 @@ nnoremap <C-P> :GFiles<CR>
 nnoremap Q :Buffers<CR>
 ]])
 
+-- Autocmds
+local id = vim.api.nvim_create_augroup("minvimrc", { clear = true })
+
+function map_q(ev)
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'q', ':q<CR>', opts)
+end
+
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+    group = id,
+    callback = map_q
+})
+
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = "qf",
+    group = id,
+    callback = map_q
+})
+
+vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+    group = id,
+    callback = function(ev)
+        vim.cmd("cwindow")
+    end
+})
+
 -- Startify
 vim.g.startify_relative_path = 1
 -- vim.g.startify_skiplist = [ 'COMMIT_EDITMSG$', '\('.escape($VIMRUNTIME, '\').'\|bundle/.*\)/doc/.*\.txt$' ]
