@@ -28,7 +28,7 @@ require("lazy").setup({
         {
             'junegunn/fzf.vim',
             dependencies =  {
-                { 'junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --all' } }
+                { 'junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --bin' } }
             }
         },
         { 'tpope/vim-repeat' },
