@@ -295,14 +295,10 @@ function copy() {
     tr -d '\n' | xsel -b
 }
 
-function sprunge() {
-    curl -sF 'sprunge=<-' http://sprunge.us | tr -d '\n'
-    echo ${1:+\?$1}
+function 0x0() {
+    curl -sF 'file=@-' http://0x0.st
 }
 
-function ix() {
-    curl -F 'f:1=<-' ix.io
-}
 # ]]]
 
 {{ if eq .chezmoi.hostname "oystein-w-KomplettPC" }}
