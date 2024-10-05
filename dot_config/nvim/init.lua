@@ -136,8 +136,11 @@ require("lazy").setup({
             end
         },
         {
-            'Civitasv/cmake-tools.nvim',
-            dependencies = { 'nvim-lua/plenary.nvim' }
+            'Osse/cmake-tools.nvim',
+            dependencies = { 'nvim-lua/plenary.nvim' },
+            config = function()
+                require('cmake-tools').setup({})
+            end,
         }
     },
   -- Configure any other settings here. See the documentation for more details.
