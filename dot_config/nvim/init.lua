@@ -34,8 +34,34 @@ require("lazy").setup({
         { 'tpope/vim-repeat' },
         { 'tpope/vim-fugitive' },
         { 'Osse/double-tap' },
-        { 'nanotech/jellybeans.vim' },
-        { 'mhinz/vim-startify' },
+        {
+            'nanotech/jellybeans.vim',
+            lazy = false,
+            priority = 1000,
+            init = function()
+                vim.g.jellybeans_overrides = {
+                    ['StatusLine'] = { ['attr'] = 'bold' },
+                    ['StatusLineNC'] = { ['attr'] = 'bold' }
+                }
+                vim.cmd.colorscheme("jellybeans")
+            end
+        },
+        {
+            'mhinz/vim-startify',
+            init = function()
+                vim.g.startify_relative_path = 1
+                vim.g.startify_bookmarks = {
+                    { ['m'] = '~/.vim/vimrc' },
+                    { ['n'] = '~/.config/nvim/init.lua' },
+                    { ['i'] = '~/.i3/config' },
+                    { ['z'] = '~/.zshrc' },
+                    { ['b'] = '~/.bashrc' },
+                    { ['g'] = '~/.gitconfig' },
+                }
+                vim.g.startify_change_to_dir = 0
+                vim.g.startify_change_to_vcs_root = 1
+            end
+        },
         { 'richq/vim-cmake-completion' },
         { 'PotatoesMaster/i3-vim-syntax' },
         { 'PProvost/vim-ps1' },
@@ -44,15 +70,12 @@ require("lazy").setup({
         {
             'nvim-treesitter/nvim-treesitter',
             build = ':TSUpdate',
-            config = function ()
-                local configs = require("nvim-treesitter.configs")
-                configs.setup({
-                  ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", "toml", "yaml" },
-                  sync_install = false,
-                  highlight = { enable = true },
-                  indent = { enable = true },
-                })
-            end
+            opts = {
+                ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", "toml", "yaml" },
+                sync_install = false,
+                highlight = { enable = true },
+                indent = { enable = true },
+            }
         },
         {
             'mikesmithgh/kitty-scrollback.nvim',
@@ -60,9 +83,7 @@ require("lazy").setup({
             lazy = true,
             cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
             event = { 'User KittyScrollbackLaunch' },
-            config = function()
-                require('kitty-scrollback').setup()
-            end,
+            opts = {}
         },
         {
             'neovim/nvim-lspconfig',
@@ -93,7 +114,7 @@ require("lazy").setup({
                 }
 
                 -- C++
-                require'lspconfig'.clangd.setup {
+                lspconfig.clangd.setup {
                 }
 
                 -- Global mappings.
@@ -138,9 +159,7 @@ require("lazy").setup({
         {
             'Osse/cmake-tools.nvim',
             dependencies = { 'nvim-lua/plenary.nvim' },
-            config = function()
-                require('cmake-tools').setup({})
-            end,
+            opts = {}
         }
     },
   -- Configure any other settings here. See the documentation for more details.
@@ -148,11 +167,6 @@ require("lazy").setup({
   install = { colorscheme = { "jellybeans" } },
 })
 
-vim.g.jellybeans_overrides = {
-    ['StatusLine'] = { ['attr'] = 'bold' },
-    ['StatusLineNC'] = { ['attr'] = 'bold' }
-}
-vim.cmd.colorscheme("jellybeans")
 
 -- Options
 vim.opt.suffixes = '.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc'
@@ -243,16 +257,3 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
     end
 })
 
--- Startify
-vim.g.startify_relative_path = 1
--- vim.g.startify_skiplist = [ 'COMMIT_EDITMSG$', '\('.escape($VIMRUNTIME, '\').'\|bundle/.*\)/doc/.*\.txt$' ]
-vim.g.startify_bookmarks = {
-    { ['m'] = '~/.vim/vimrc' },
-    { ['n'] = '~/.config/nvim/init.lua' },
-    { ['i'] = '~/.i3/config' },
-    { ['z'] = '~/.zshrc' },
-    { ['b'] = '~/.bashrc' },
-    { ['g'] = '~/.gitconfig' },
-}
-vim.g.startify_change_to_dir = 0
-vim.g.startify_change_to_vcs_root = 1
