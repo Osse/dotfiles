@@ -159,7 +159,9 @@ require("lazy").setup({
         {
             'Osse/cmake-tools.nvim',
             dependencies = { 'nvim-lua/plenary.nvim' },
-            opts = {}
+            opts = {
+                cmake_generate_options = {},
+            }
         }
     },
   -- Configure any other settings here. See the documentation for more details.
