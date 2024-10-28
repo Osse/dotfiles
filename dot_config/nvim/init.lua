@@ -18,6 +18,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = "ø"
 vim.g.maplocalleader = "æ"
 
+local minvimrc_augroup = vim.api.nvim_create_augroup("minvimrc", { clear = true })
+
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
@@ -71,7 +73,7 @@ require("lazy").setup({
             'nvim-treesitter/nvim-treesitter',
             build = ':TSUpdate',
             opts = {
-                ensure_installed = { "c", "cmake", "cpp", "just", "lua", "python", "rust", "vim", "vimdoc", "toml", "yaml" },
+                ensure_installed = { "c", "cmake", "cpp", "just", "lua", "markdown", "python", "rust", "vim", "vimdoc", "toml", "yaml" },
                 sync_install = false,
                 highlight = { enable = true },
                 indent = { enable = true },
@@ -114,8 +116,15 @@ require("lazy").setup({
                 }
 
                 -- C++
-                lspconfig.clangd.setup {
-                }
+                lspconfig.clangd.setup({
+                    vim.api.nvim_create_autocmd('LspAttach', {
+                        group = vim.api.nvim_create_augroup('UserLspConfigClangd', {}),
+                        callback = function(ev)
+                            local opts = { buffer = ev.buf }
+                            vim.keymap.set('n', '<F4>', ':ClangdSwitchSourceHeader<CR>', opts)
+                        end,
+                    })
+                })
 
                 -- Global mappings.
                 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -149,7 +158,7 @@ require("lazy").setup({
                         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
                         vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
                         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                        vim.keymap.set('n', '<leader>f', function()
+                        vim.keymap.set('n', '<leader>=', function()
                             vim.lsp.buf.format { async = true }
                         end, opts)
                     end,
@@ -184,12 +193,25 @@ require("lazy").setup({
                         ['<C-e>'] = cmp.mapping.abort(),
                         -- Accept currently selected item.
                         -- Set `select` to `false` to only confirm explicitly selected items.
-                        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                        ['<Tab>'] = cmp.mapping.confirm({ select = true }),
                     }),
                     sources = cmp.config.sources({
                         { name = 'nvim_lsp' },
                     }, {
                         { name = 'path' },
+                    }, {
+                        {
+                            name = 'buffer',
+                            option = {
+                                get_bufnrs = function()
+                                    local bufs = {}
+                                    for _, win in ipairs(vim.api.nvim_list_wins()) do
+                                        bufs[vim.api.nvim_win_get_buf(win)] = true
+                                    end
+                                    return vim.tbl_keys(bufs)
+                                end
+                            }
+                        },
                     }),
                     experimental = {
                         ghost_text = true,
@@ -205,13 +227,23 @@ require("lazy").setup({
             end
         },
         {
-            dir = '~/dev/cmake-tools.nvim'
+            dir = '~/dev/cmake-tools.nvim',
             -- 'Osse/cmake-tools.nvim',
             -- branch = "all-fixes",
-            -- dependencies = { 'nvim-lua/plenary.nvim' },
-            -- opts = {
-            --     cmake_generate_options = {},
-            -- }
+            dependencies = { 'nvim-lua/plenary.nvim' },
+            opts = {
+                cmake_generate_options = {},
+                cmake_regenerate_on_save = false,
+            },
+            init = function()
+                vim.api.nvim_create_autocmd("User", {
+                    pattern = "CMakeToolsEnterProject",
+                    group = minvimrc_augroup,
+                    callback = function(ev)
+                        vim.keymap.set('n', '<F5>', ':CMakeBuild<CR>')
+                    end
+                })
+            end
         },
         {
             'nvim-telescope/telescope.nvim',
@@ -222,8 +254,18 @@ require("lazy").setup({
                     'nvim-telescope/telescope-fzf-native.nvim',
                     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
                 }
+            },
+            opts = {
+                buffers = {
+                    sort_lastused = true
+                },
+                defaults = {
+                    cache_picker = {
+                        num_pickers = 5
+                    }
+                }
             }
-        }
+        },
     },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -267,8 +309,8 @@ vnoremap <         <gv
 nnoremap c)        v)?[.!?]\+?s-1<CR>c
 nnoremap g)        )gE
 nnoremap g(        (gE
-nnoremap <C-Left>  <C-W><Left>
-nnoremap <C-Right> <C-W><Right>
+nnoremap <C-Left>  <C-O>
+nnoremap <C-Right> <C-I>
 nnoremap <C-Down>  <C-W><Down>
 nnoremap <C-Up>    <C-W><Up>
 nnoremap <Esc>O5D  <C-W><Left>
@@ -279,7 +321,6 @@ nnoremap <Esc>O5A  <C-W><Up>
 nnoremap <F1> :he 
 nnoremap <F2> :set invnumber number?<CR>
 nnoremap <F3> :set invrelativenumber relativenumber?<CR>
-nnoremap <F5> :set invlist list?<CR>
 nnoremap <F6> :set invspell spell?<CR>
 nnoremap <F7> :set invwrap wrap?<CR>
 nnoremap <silent> <F9> :wall <Bar> make<CR><CR><CR>:botright cwindow<CR>
@@ -290,12 +331,13 @@ nnoremap ' `
 nnoremap ` '
 nnoremap <leader>q gqap
 
-nnoremap <C-P> :GFiles<CR>
-nnoremap Q :Buffers<CR>
+nnoremap <C-P> :Telescope git_files<CR>
+nnoremap Q :Telescope buffers<CR>
+nnoremap <Leader>f :Telescope grep_string<CR>
+nnoremap <Leader>F :Telescope live_grep<CR>
 ]])
 
 -- Autocmds
-local id = vim.api.nvim_create_augroup("minvimrc", { clear = true })
 
 function map_q(ev)
     local opts = { buffer = ev.buf }
@@ -303,20 +345,19 @@ function map_q(ev)
 end
 
 vim.api.nvim_create_autocmd("CmdwinEnter", {
-    group = id,
+    group = minvimrc_augroup,
     callback = map_q
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
     pattern = "qf",
-    group = id,
+    group = minvimrc_augroup,
     callback = map_q
 })
 
 vim.api.nvim_create_autocmd("QuickFixCmdPost", {
-    group = id,
+    group = minvimrc_augroup,
     callback = function(ev)
         vim.cmd("cwindow")
     end
 })
-
