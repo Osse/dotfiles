@@ -20,6 +20,22 @@ vim.g.maplocalleader = "æ"
 
 local minvimrc_augroup = vim.api.nvim_create_augroup("minvimrc", { clear = true })
 
+function code_context()
+    local opts = {}
+
+    if vim.bo.filetype == "yaml" then
+        opts.type_patterns = { "block_mapping_pair" }
+        opts.transform_fn = function(text, node)
+            -- Strip ":" from parent nodes and ": some value" or ": |" from the current node
+            local i = string.find(text, ":") or 0
+            return string.sub(text, 1, i-1)
+        end
+    end
+    -- else the defaults are good enough for now
+
+    return require("nvim-treesitter").statusline(opts)
+end
+
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
@@ -41,10 +57,6 @@ require("lazy").setup({
             lazy = false,
             priority = 1000,
             init = function()
-                vim.g.jellybeans_overrides = {
-                    ['StatusLine'] = { ['attr'] = 'bold' },
-                    ['StatusLineNC'] = { ['attr'] = 'bold' }
-                }
                 vim.cmd.colorscheme("jellybeans")
             end
         },
@@ -263,6 +275,23 @@ require("lazy").setup({
                     cache_picker = {
                         num_pickers = 5
                     }
+                }
+        },
+        {
+            'nvim-lualine/lualine.nvim',
+            opts = {
+                options = {
+                    theme = 'jellybeans'
+                },
+                extensions = { 'quickfix' },
+                sections = {
+                    lualine_c = {
+                        {
+                            'filename',
+                            path = 1
+                        }
+                    },
+                    lualine_x = { code_context }
                 }
             }
         },
