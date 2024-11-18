@@ -268,8 +268,10 @@ require("lazy").setup({
                 }
             },
             opts = {
-                buffers = {
-                    sort_lastused = true
+                pickers = {
+                    buffers = {
+                        sort_lastused = true
+                    }
                 },
                 defaults = {
                     cache_picker = {
