@@ -265,9 +265,13 @@ require("lazy").setup({
                 {
                     'nvim-telescope/telescope-fzf-native.nvim',
                     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
-                }
+                },
+                'nvim-telescope/telescope-ui-select.nvim'
             },
             opts = {
+                extensions = {
+                    ["ui-select"] =  {}
+                },
                 pickers = {
                     buffers = {
                         sort_lastused = true
@@ -278,6 +282,10 @@ require("lazy").setup({
                         num_pickers = 5
                     }
                 }
+            },
+            init = function()
+                require("telescope").load_extension("ui-select")
+            end
         },
         {
             'nvim-lualine/lualine.nvim',
