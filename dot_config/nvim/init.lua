@@ -30,6 +30,8 @@ function code_context()
             local i = string.find(text, ":") or 0
             return string.sub(text, 1, i-1)
         end
+    elseif vim.bo.filetype == "qml" then
+        opts.type_patterns = { "ui_object_definition" }
     end
     -- else the defaults are good enough for now
 
