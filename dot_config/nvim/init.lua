@@ -241,6 +241,10 @@ require("lazy").setup({
             end
         },
         {
+            'stevearc/overseer.nvim',
+            opts = {}
+        },
+        {
             dir = '~/dev/cmake-tools.nvim',
             -- 'Osse/cmake-tools.nvim',
             -- branch = "all-fixes",
@@ -248,6 +252,20 @@ require("lazy").setup({
             opts = {
                 cmake_generate_options = {},
                 cmake_regenerate_on_save = false,
+                cmake_executor = {
+                    name = "overseer",
+                    default_opts = {
+                        overseer = {
+                            new_task_opts = {},
+                            on_new_task = function(task)
+                                require("overseer").open( { enter = false, direction = "bottom" })
+                            end,
+                        },
+                    },
+                },
+                cmake_runner = {
+                    name = "overseer",
+                },
             },
             init = function()
                 vim.api.nvim_create_autocmd("User", {
