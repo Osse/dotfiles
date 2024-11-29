@@ -41,6 +41,12 @@ for cur ($split[1,-2]) {
            # but stop if there are no more characters to add
            (( $#a > 1 )) || [[ $part == (.|..) ]] && (( $#cur > 0 ))
         } { # this is a do-while loop
+        if (( $#a > 10000 )); then
+            # Takes too long
+            part+=$cur
+            cur=
+            break
+        fi
   }
   full+=/$part$cur
   short+=/$part
