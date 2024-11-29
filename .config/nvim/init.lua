@@ -17,6 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = "ø"
 vim.g.maplocalleader = "æ"
+vim.g.loaded_python3_provider = 0
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -24,8 +25,8 @@ require("lazy").setup({
         { 'tpope/vim-surround' },
         { 'tomtom/tcomment_vim' },
         { 'godlygeek/tabular' },
-        { 'SirVer/ultisnips' },
-        { 'honza/vim-snippets' },
+        -- { 'SirVer/ultisnips' },
+        -- { 'honza/vim-snippets' },
         {
             'junegunn/fzf.vim',
             dependencies =  {
