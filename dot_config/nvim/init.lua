@@ -300,6 +300,11 @@ require("lazy").setup({
                 defaults = {
                     cache_picker = {
                         num_pickers = 5
+                    },
+                    mappings = {
+                        i = {
+                            ["<C-u>"] = false
+                        }
                     }
                 }
             },
