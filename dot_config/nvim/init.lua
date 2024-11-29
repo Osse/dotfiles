@@ -94,6 +94,9 @@ require("lazy").setup({
             }
         },
         {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
+        {
             'mikesmithgh/kitty-scrollback.nvim',
             enabled = true,
             lazy = true,
@@ -139,6 +142,9 @@ require("lazy").setup({
                         end,
                     })
                 })
+
+                -- Python
+                lspconfig.pylsp.setup({})
 
                 -- Global mappings.
                 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
