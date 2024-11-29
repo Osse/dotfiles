@@ -35,6 +35,8 @@ done
 export MANPATH="/mingw64/share/man:$MANPATH"
 export MSYS2_ARG_CONV_EXCL=':/*'
 export COLUMNS
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.state
 {{ end }}
 
 unset -f prefix_path
