@@ -251,9 +251,8 @@ require("lazy").setup({
             opts = {}
         },
         {
-            dir = '~/dev/cmake-tools.nvim',
-            -- 'Osse/cmake-tools.nvim',
-            -- branch = "all-fixes",
+            'Osse/cmake-tools.nvim',
+            branch = "all-fixes",
             dependencies = { 'nvim-lua/plenary.nvim' },
             opts = {
                 cmake_generate_options = {},
