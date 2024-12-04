@@ -45,6 +45,7 @@ require("lazy").setup({
         { 'godlygeek/tabular' },
         { 'SirVer/ultisnips' },
         { 'honza/vim-snippets' },
+        { 'NoahTheDuke/vim-just' },
         {
             'junegunn/fzf.vim',
             dependencies =  {
