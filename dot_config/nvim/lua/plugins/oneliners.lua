@@ -1,0 +1,16 @@
+return {
+    'tpope/vim-surround',
+    'godlygeek/tabular',
+    'SirVer/ultisnips',
+    'honza/vim-snippets',
+    'tpope/vim-repeat',
+    'tpope/vim-fugitive',
+    'Osse/double-tap',
+    'NoahTheDuke/vim-just',
+    'richq/vim-cmake-completion',
+    'PotatoesMaster/i3-vim-syntax',
+    'PProvost/vim-ps1',
+    'fladson/vim-kitty',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'stevearc/overseer.nvim',
+}
