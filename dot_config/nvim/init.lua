@@ -53,47 +53,53 @@ vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.undofile = true
 
--- Mappings
-vim.cmd([[
-nnoremap !         ?
-nnoremap S         /
-nnoremap <Space>   <C-W><C-W>
-noremap  ZA        :qa!<CR>
-noremap  ¤         $
-noremap  æ         ^
-noremap  <Leader>p p=']
-vnoremap >         >gv
-vnoremap <         <gv
-nnoremap c)        v)?[.!?]\+?s-1<CR>c
-nnoremap g)        )gE
-nnoremap g(        (gE
-nnoremap <C-Left>  <C-O>
-nnoremap <C-Right> <C-I>
-nnoremap <C-Down>  <C-W><Down>
-nnoremap <C-Up>    <C-W><Up>
-nnoremap <Esc>O5D  <C-W><Left>
-nnoremap <Esc>O5C  <C-W><Right>
-nnoremap <Esc>O5B  <C-W><Down>
-nnoremap <Esc>O5A  <C-W><Up>
-" Toggles and other stuff {{{
-nnoremap <F1> :he 
-nnoremap <F2> :set invnumber number?<CR>
-nnoremap <F3> :set invrelativenumber relativenumber?<CR>
-nnoremap <F6> :set invspell spell?<CR>
-nnoremap <F7> :set invwrap wrap?<CR>
-nnoremap <silent> <F9> :wall <Bar> make<CR><CR><CR>:botright cwindow<CR>
-" }}}
-nnoremap <C-W>] :vsplit<CR>:tag<CR>
-nnoremap <silent> <C-l> :noh<CR><C-l>
-nnoremap ' `
-nnoremap ` '
-nnoremap <leader>q gqap
+local n = function(lhs, rhs)
+    vim.keymap.set('n', lhs, rhs, {})
+end
+local v = function(lhs, rhs)
+    vim.keymap.set('v', lhs, rhs, {})
+end
 
-nnoremap <C-P> :Telescope git_files<CR>
-nnoremap Q :Telescope buffers<CR>
-nnoremap <Leader>f :Telescope grep_string<CR>
-nnoremap <Leader>F :Telescope live_grep<CR>
-]])
+-- Mappings
+n('!', '?')
+n('S', '/')
+n('<Space>', '<C-W><C-W>')
+n('ZA', ':qa!<CR>')
+n('¤', '$')
+n('æ', '^')
+n('<Leader>p', "p=']")
+v('>', '>gv')
+v('<', '<gv')
+n('c)', 'v)?[.!?]\\+?s-1<CR>c')
+n('g)', ')gE')
+n('g(', '(gE')
+n('<C-Left>', '<C-O>')
+n('<C-Right>', '<C-I>')
+n('<C-Down>', '<C-W><Down>')
+n('<C-Up>', '<C-W><Up>')
+n('<Esc>O5D', '<C-W><Left>')
+n('<Esc>O5C', '<C-W><Right>')
+n('<Esc>O5B', '<C-W><Down>')
+n('<Esc>O5A', '<C-W><Up>')
+-- Toggles and other stuff {{{
+n('<F1>', ':he ')
+n('<F2>', ':set invnumber number?<CR>')
+n('<F3>', ':set invrelativenumber relativenumber?<CR>')
+n('<F6>', ':set invspell spell?<CR>')
+n('<F7>', ':set invwrap wrap?<CR>')
+n('<silent>', '<F9> :wall <Bar> make<CR><CR><CR>:botright cwindow<CR>')
+-- }}}
+n('<C-W>]', ':vsplit<CR>:tag<CR>')
+n('<silent>', '<C-l> :noh<CR><C-l>')
+n("'", '`')
+n('`', "'")
+n('<leader>q', 'gqap')
+
+local tb = require('telescope.builtin')
+n('<C-P>', tb.git_files)
+n('Q', tb.buffers)
+n('<Leader>f', function() tb.grep_string({ word_match = "-w" }) end)
+n('<Leader>F', tb.live_grep)
 
 -- Autocmds
 
