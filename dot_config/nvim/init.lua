@@ -103,7 +103,7 @@ n('<Leader>F', tb.live_grep)
 
 -- Autocmds
 
-function map_q(ev)
+local function map_q(ev)
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'q', ':q<CR>', opts)
 end
