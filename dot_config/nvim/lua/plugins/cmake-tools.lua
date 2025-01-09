@@ -9,7 +9,15 @@ return {
             name = "overseer",
             default_opts = {
                 overseer = {
-                    new_task_opts = {},
+                    new_task_opts = {
+                        strategy = {
+                            "terminal",
+                            direction = "horizontal",
+                            autos_croll = true,
+                            quit_on_exit = "success"
+                        },
+                        components = { { "on_output_quickfix", open = true }, "default" }
+                    },
                     on_new_task = function(task)
                         require("overseer").open( { enter = false, direction = "bottom" })
                     end,
