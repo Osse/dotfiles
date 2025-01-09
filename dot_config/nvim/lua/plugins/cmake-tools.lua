@@ -7,14 +7,6 @@ return {
         cmake_regenerate_on_save = false,
         cmake_executor = {
             name = "overseer",
-            default_opts = {
-                overseer = {
-                    new_task_opts = {},
-                    on_new_task = function(task)
-                        require("overseer").open( { enter = false, direction = "bottom" })
-                    end,
-                },
-            },
         },
         cmake_runner = {
             name = "overseer",
@@ -23,9 +15,10 @@ return {
     init = function()
         vim.api.nvim_create_autocmd("User", {
             pattern = "CMakeToolsEnterProject",
-            group = minvimrc_augroup,
+            group = vim.api.nvim_create_augroup("minvimrc", { clear = true }),
             callback = function(ev)
-                vim.keymap.set('n', '<F5>', ':CMakeBuild<CR>')
+                vim.keymap.set('n', '<F5>', ':CMakeRun<CR>')
+                vim.keymap.set('n', '<F6>', ':CMakeBuild<CR>')
             end
         })
     end
