@@ -30,6 +30,8 @@ return {
         }
     },
     init = function()
-        require("telescope").load_extension("ui-select")
+        local r = require("telescope")
+        r.load_extension("ui-select")
+        r.load_extension("arglist")
     end
 }

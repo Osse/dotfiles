@@ -12,4 +12,6 @@ return {
     'PProvost/vim-ps1',
     'fladson/vim-kitty',
     'nvim-treesitter/nvim-treesitter-textobjects',
+    'tikhomirov/vim-glsl',
+    'sam4llis/telescope-arglist.nvim',
 }
