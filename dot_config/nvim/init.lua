@@ -97,6 +97,7 @@ n('<leader>q', 'gqap')
 
 local tb = require('telescope.builtin')
 n('<C-P>', tb.git_files)
+n('<Leader><C-P>', function() tb.git_files({ default_text = vim.fn.expand("<cword>")}) end)
 n('Q', tb.buffers)
 n('<Leader>f', function() tb.grep_string({ word_match = "-w" }) end)
 n('<Leader>F', tb.live_grep)
