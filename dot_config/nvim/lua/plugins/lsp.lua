@@ -1,3 +1,5 @@
+local capabilities = require('blink.cmp').get_lsp_capabilities()
+
 return {
     'neovim/nvim-lspconfig',
     config = function()
@@ -24,10 +26,12 @@ return {
                     },
                 },
             },
+            capabilities = capabilities,
         }
 
         -- C++
         lspconfig.clangd.setup({
+            capabilities = capabilities,
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfigClangd', {}),
                 callback = function(ev)
@@ -38,10 +42,13 @@ return {
         })
 
         -- Python
-        lspconfig.pylsp.setup({})
+        lspconfig.pylsp.setup({
+            capabilities = capabilities,
+        })
 
         -- Lua
         lspconfig.lua_ls.setup {
+            capabilities = capabilities,
             on_init = function(client)
                 if client.workspace_folders then
                     local path = client.workspace_folders[1].name
