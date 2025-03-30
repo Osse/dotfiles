@@ -11,12 +11,5 @@ return {
         keymap = {
             preset = 'super-tab',
         },
-        cmdline = {
-            completion = {
-                menu = {
-                    auto_show = true
-                }
-            }
-        }
     },
 }
