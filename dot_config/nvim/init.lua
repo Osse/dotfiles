@@ -52,6 +52,7 @@ vim.opt.splitbelow = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.undofile = true
+vim.opt.switchbuf = "useopen"
 
 local n = function(lhs, rhs)
     vim.keymap.set('n', lhs, rhs, {})
