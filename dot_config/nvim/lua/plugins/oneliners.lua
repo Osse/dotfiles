@@ -14,4 +14,5 @@ return {
     'nvim-treesitter/nvim-treesitter-textobjects',
     'tikhomirov/vim-glsl',
     'sam4llis/telescope-arglist.nvim',
+    'sindrets/diffview.nvim',
 }
