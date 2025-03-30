@@ -64,7 +64,8 @@ end
 -- Mappings
 n('!', '?')
 n('S', '/')
-n('<Space>', '<C-W><C-W>')
+n('<Space>', '<C-W>w')
+n('<C-Space>', '<C-W>W')
 n('ZA', ':qa!<CR>')
 n('¤', '$')
 n('æ', '^')
