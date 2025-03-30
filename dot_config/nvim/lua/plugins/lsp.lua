@@ -31,6 +31,7 @@ return {
 
         -- C++
         lspconfig.clangd.setup({
+            cmd = { "clangd", "--header-insertion=never" },
             capabilities = capabilities,
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfigClangd', {}),
