@@ -21,7 +21,7 @@ return {
     'nvim-lualine/lualine.nvim',
     opts = {
         options = {
-            theme = 'jellybeans'
+            theme = 'jellybeansoverride'
         },
         extensions = { 'overseer', 'quickfix' },
         sections = {
