@@ -158,6 +158,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', '<leader>gd', vim.lsp.buf.type_definition, opts)
@@ -175,7 +177,45 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
         vim.keymap.set('n', '<leader>=', vim.lsp.buf.format, opts)
-    end,
+
+        if client.name == "clangd" then
+            vim.keymap.set('n', '<F4>', function()
+                local method_name = 'textDocument/switchSourceHeader'
+                local params = vim.lsp.util.make_text_document_params(ev.buf)
+                client.request(method_name, params, function(err, result)
+                    if err then
+                        error(tostring(err))
+                    end
+                    if not result then
+                        vim.notify('corresponding file cannot be determined')
+                        return
+                    end
+                    vim.cmd.edit(vim.uri_to_fname(result))
+                end, ev.buf)
+            end, opts)
+
+            vim.api.nvim_create_user_command('ClangdShowSymbolInfo', function()
+                local win = vim.api.nvim_get_current_win()
+                local params = vim.lsp.util.make_position_params(win, client.offset_encoding)
+                client.request('textDocument/symbolInfo', params, function(err, res)
+                    if err or #res == 0 then
+                        -- Clangd always returns an error, there is not reason to parse it
+                        return
+                    end
+                    local container = string.format('container: %s', res[1].containerName) ---@type string
+                    local name = string.format('name: %s', res[1].name) ---@type string
+                    vim.lsp.util.open_floating_preview({ name, container }, '', {
+                        height = 2,
+                        width = math.max(string.len(name), string.len(container)),
+                        focusable = false,
+                        focus = false,
+                        border = 'single',
+                        title = 'Symbol Info',
+                    })
+                end, ev.buf)
+            end, {})
+        end
+    end
 })
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
