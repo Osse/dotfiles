@@ -1,4 +1,3 @@
-local actions = require "telescope.actions"
 
 return {
     'nvim-telescope/telescope.nvim',
@@ -11,31 +10,34 @@ return {
         },
         'nvim-telescope/telescope-ui-select.nvim'
     },
-    opts = {
-        extensions = {
-            ["ui-select"] = {}
-        },
-        pickers = {
-            buffers = {
-                sort_lastused = true,
+    opts = function()
+        local actions = require "telescope.actions"
+        return {
+            extensions = {
+                ["ui-select"] = {}
+            },
+            pickers = {
+                buffers = {
+                    sort_lastused = true,
+                    mappings = {
+                        i = {
+                            ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+                        }
+                    }
+                }
+            },
+            defaults = {
+                cache_picker = {
+                    num_pickers = 5
+                },
                 mappings = {
                     i = {
-                        ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+                        ["<C-u>"] = false
                     }
                 }
             }
-        },
-        defaults = {
-            cache_picker = {
-                num_pickers = 5
-            },
-            mappings = {
-                i = {
-                    ["<C-u>"] = false
-                }
-            }
         }
-    },
+    end,
     init = function()
         local r = require("telescope")
         r.load_extension("ui-select")
