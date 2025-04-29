@@ -87,7 +87,6 @@ n('<Esc>O5A', '<C-W><Up>')
 n('<F1>', ':he ')
 n('<F2>', ':set invnumber number?<CR>')
 n('<F3>', ':set invrelativenumber relativenumber?<CR>')
-n('<F6>', ':set invspell spell?<CR>')
 n('<F7>', ':set invwrap wrap?<CR>')
 n('<silent>', '<F9> :wall <Bar> make<CR><CR><CR>:botright cwindow<CR>')
 -- }}}
