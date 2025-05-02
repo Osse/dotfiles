@@ -340,4 +340,9 @@ wcd() {
     cd "$(cygpath $1)"
 }
 
+if [[ -n $WEZTERM_CONFIG_DIR ]] && [[ -e $WEZTERM_CONFIG_DIR/wezterm.zsh ]]; then
+    WEZTERM_SHELL_SKIP_USER_VAR=1
+    source $WEZTERM_CONFIG_DIR/wezterm.zsh
+fi
+
 # vim: foldmethod=marker foldmarker=[[[,]]] foldlevel=0
