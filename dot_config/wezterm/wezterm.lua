@@ -2,7 +2,10 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-config.font = wezterm.font('Ubuntu Mono')
+config.font = wezterm.font('Ubuntu Mono', { weight = "Regular" })
+config.font_size = 13
+config.cell_width = 0.9
+config.color_scheme = 'Tango (terminal.sexy)'
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     require('windows').apply_to_config(config)
