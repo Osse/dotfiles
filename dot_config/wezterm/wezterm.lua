@@ -43,4 +43,24 @@ wezterm.on('update-status', function(window, _)
   })
 end)
 
+config.ssh_domains = {
+  {
+    -- This name identifies the domain
+    name = 'work-desktop',
+    -- The hostname or address to connect to. Will be used to match settings
+    -- from your ssh config file
+    remote_address = 'oystein-w-KomplettPC',
+    -- The username to use on the remote host
+    username = 'oystein-w',
+  },
+}
+
+config.unix_domains = {
+  {
+    name = 'unix',
+  },
+}
+
+config.default_gui_startup_args = { 'connect', 'unix' }
+
 return config
