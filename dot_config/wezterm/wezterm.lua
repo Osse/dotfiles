@@ -2,7 +2,9 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-config.font = wezterm.font('Ubuntu Mono')
+config.font = wezterm.font('Deja Vu Sans Mono')
+config.font_size = 11.5
+config.freetype_load_target = "Light"
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     require('windows').apply_to_config(config)
