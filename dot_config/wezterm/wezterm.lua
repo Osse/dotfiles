@@ -8,6 +8,36 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     require('windows').apply_to_config(config)
 end
 
+config.audible_bell = "Disabled"
+
+-- Use Kitty's exact colors for now. Taken from Kitty's home page
+config.colors = {
+    foreground = '#eeeeee',
+    background = 'black',
+    ansi = {
+        '#000000',
+        '#cc0403',
+        '#19cb00',
+        '#cecb00',
+        '#0d73cc',
+        '#cb1ed1',
+        '#0dcdcd',
+        '#dddddd',
+    },
+    brights = {
+        '#767676',
+        '#f2201f',
+        '#23fd00',
+        '#fffd00',
+        '#1a8fff',
+        '#fd28ff',
+        '#14ffff',
+        '#ffffff',
+    },
+    cursor_bg = "#eeeeee"
+}
+config.bold_brightens_ansi_colors = false
+
 config.keys = {}
 
 for i=1,9 do
