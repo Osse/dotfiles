@@ -76,6 +76,19 @@ config.mouse_bindings = {
   },
 }
 
+table.insert(config.keys, {
+    key = 'a',
+    mods = 'LEADER',
+    action = act.AttachDomain 'unix',
+  }
+)
+
+table.insert(config.keys, {
+    key = 'd',
+    mods = 'LEADER',
+    action = act.DetachDomain { DomainName = 'unix' },
+})
+
 wezterm.on('update-status', function(window, _)
   local date = wezterm.strftime '%Y-%m-%d %H:%M:%S'
 
@@ -105,6 +118,29 @@ config.unix_domains = {
   },
 }
 
-config.default_gui_startup_args = { 'connect', 'unix' }
+-- config.default_gui_startup_args = { 'connect', 'unix' }
+
+function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane
+  -- in that tab
+  return tab_info.active_pane.title
+end
+
+wezterm.on(
+  'format-tab-title',
+  function(tab, tabs, panes, config, hover, max_width)
+    local title = tab_title(tab)
+    local pane = tab.active_pane
+    if pane.domain_name and pane.domain_name ~= "local" then
+        title = title .. " (" .. pane.domain_name .. ")"
+    end
+    return title
+  end
+)
 
 return config
