@@ -64,6 +64,18 @@ table.insert(config.keys, {
     end)
 })
 
+for key, dir in pairs({ UpArrow = -1, DownArrow = 1 }) do
+    table.insert(config.keys, { key = key, mods = 'SHIFT', action = act.ScrollToPrompt(dir) })
+end
+
+config.mouse_bindings = {
+  {
+    event = { Down = { streak = 3, button = 'Left' } },
+    action = wezterm.action.SelectTextAtMouseCursor('SemanticZone'),
+    mods = 'NONE',
+  },
+}
+
 wezterm.on('update-status', function(window, _)
   local date = wezterm.strftime '%Y-%m-%d %H:%M:%S'
 
