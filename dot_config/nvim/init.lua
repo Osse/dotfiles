@@ -53,6 +53,7 @@ vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.undofile = true
 vim.opt.switchbuf = "useopen"
+vim.opt.exrc = true
 
 local n = function(lhs, rhs)
     vim.keymap.set('n', lhs, rhs, {})
@@ -148,7 +149,6 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
     end
 })
 
--- LSP
 vim.lsp.enable({'clangd', 'lua-language-server', 'pylsp', 'rust-analyzer'})
 
 vim.api.nvim_create_autocmd('LspAttach', {
