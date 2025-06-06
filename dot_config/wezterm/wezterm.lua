@@ -89,17 +89,6 @@ table.insert(config.keys, {
     action = act.DetachDomain { DomainName = 'unix' },
 })
 
-wezterm.on('update-status', function(window, _)
-  local date = wezterm.strftime '%Y-%m-%d %H:%M:%S'
-
-  -- Make it italic and underlined
-  window:set_right_status(wezterm.format {
-    { Attribute = { Underline = 'Single' } },
-    { Attribute = { Italic = true } },
-    { Text = date },
-  })
-end)
-
 config.ssh_domains = {
   {
     -- This name identifies the domain
