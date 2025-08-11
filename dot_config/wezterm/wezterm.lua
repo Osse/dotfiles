@@ -40,17 +40,35 @@ config.colors = {
 }
 config.bold_brightens_ansi_colors = false
 
+-- Same as tmux but allow tmux
+config.leader = { key = 'b', mods = 'CTRL|SHIFT', timeout_milliseconds = 1000 }
+
 config.keys = {}
+local function bind(k)
+    table.insert(config.keys, k)
+end
+
+bind({
+    key = 'a',
+    mods = 'LEADER',
+    action = act.AttachDomain('unix'),
+})
+
+bind({
+    key = 'd',
+    mods = 'LEADER',
+    action = act.DetachDomain('CurrentPaneDomain'),
+})
 
 for i=1,9 do
-    table.insert(config.keys, { key = tostring(i), mods = 'ALT', action = act.ActivateTab(i - 1), })
+    bind({ key = tostring(i), mods = 'ALT', action = act.ActivateTab(i - 1), })
 end
 
 for key, dir in pairs({ w = "Up", a = "Left", s = "Down", d = "Right" }) do
-    table.insert(config.keys, { key = key, mods = 'ALT', action = act.ActivatePaneDirection(dir), })
+    bind({ key = key, mods = 'ALT', action = act.ActivatePaneDirection(dir), })
 end
 
-table.insert(config.keys, {
+bind({
     key = "Enter",
     mods = "CTRL|SHIFT",
     action = wezterm.action_callback(function(_, pane)
@@ -90,21 +108,20 @@ table.insert(config.keys, {
 })
 
 config.ssh_domains = {
-  {
-    -- This name identifies the domain
-    name = 'work-desktop',
-    -- The hostname or address to connect to. Will be used to match settings
-    -- from your ssh config file
-    remote_address = 'oystein-w-KomplettPC',
-    -- The username to use on the remote host
-    username = 'oystein-w',
-  },
+    {
+        name = 'work-desktop',
+        remote_address = 'work-deskop',
+    },
 }
 
 config.unix_domains = {
-  {
-    name = 'unix',
-  },
+    {
+        name = 'unix',
+    },
+    {
+        name = 'unixwork',
+        proxy_command = { "ssh", "-T", "work-desktop", "wezterm", "cli", "proxy" },
+    },
 }
 
 -- config.default_gui_startup_args = { 'connect', 'unix' }
