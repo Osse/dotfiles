@@ -151,6 +151,20 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 
 vim.lsp.enable({'clangd', 'lua-language-server', 'pylsp', 'rust-analyzer'})
 
+local current_rename_handler = vim.lsp.handlers['textDocument/rename']
+vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
+  current_rename_handler(err, result, ctx, config)
+  pcall(
+    vim.fn["repeat#set"],
+    vim.api.nvim_replace_termcodes(
+      string.format([[<Cmd>lua vim.lsp.buf.rename('%s')<CR>]], ctx.params.newName),
+      true,
+      false,
+      true
+    )
+  )
+end
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
