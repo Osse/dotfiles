@@ -75,22 +75,25 @@ fi
 
 # Prompt [[[
 
-function precmd() {
+function set-title() {
     (( title_set )) || print -nP "\033]0;${SSH_CONNECTION:+SSH: }%n@%m:%~\007"
-    get-vcs-data
 }
+
+precmd_functions=(set-title get-vcs-data)
 
 function title() {
     print -nP "\033]0;$*\007"
     title_set=1
 }
 
-function chpwd() {
+function disambiguate-psvar() {
     local REPLY
     disambiguate
     psvar[1]=$REPLY
 }
-chpwd
+disambiguate-psvar
+
+chpwd_functions=(disambiguate-psvar)
 
 case $HOST in
     paasan)     hostcolor=161 ;;
@@ -343,6 +346,6 @@ if [[ -n $WEZTERM_CONFIG_DIR ]] && [[ -e $WEZTERM_CONFIG_DIR/wezterm.zsh ]]; the
     source $WEZTERM_CONFIG_DIR/wezterm.zsh
 fi
 
-chpwd # To make prompt reflect hash -d
+disambiguate-psvar # To make prompt reflect hash -d
 
 # vim: foldmethod=marker foldmarker=[[[,]]] foldlevel=0
