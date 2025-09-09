@@ -315,10 +315,48 @@ function 0x0() {
 
 {{ if eq .chezmoi.hostname "jambi" }}
 # Zivid stuff
+
+function chpwd_env() {
+    if [[ $PWD = $HOME/ros2_ws* ]]; then
+        [[ -n $VIRTUAL_ENV ]] && deactivate
+        [[ -z $ROS_VERSION ]] && source /opt/ros/jazzy/setup.zsh
+        [[ -z $COLCON_PREFIX_PATH ]] && source $HOME/ros2_ws/install/setup.zsh
+    fi
+}
+
+chpwd_functions+=(chpwd_env)
+
+function virtual_stuff() {
+    if [[ -n $VIRTUAL_ENV && -n $ROS_VERSION ]]; then
+        # psvar[20]=1
+        # psvar[21]=XXXXXXXXX
+        return
+    fi
+
+    if [[ -n $VIRTUAL_ENV ]]; then
+        # psvar[20]=1
+        # psvar[21]=${VIRTUAL_ENV##*/}
+    elif [[ -n $ROS_VERSION ]]; then
+        psvar[20]=1
+        psvar[21]=ROS
+    else
+        psvar[20]=
+    fi
+}
+virtual_stuff
+
+precmd_functions+=(virtual_stuff)
+
 VIRTUAL_ENV_DISABLE_PROMPT=1
 source ~/venv/bin/activate
 hash -d z=$HOME/dev/zivid-sdk
 hash -d b=$HOME/dev/zivid-sdk/sdk/build
+
+for d in $HOME/dev/zivid-sdk-*; do
+    [[ $d = (#b)*-(*) ]]
+    hash -d z$match[1]=$d
+done
+
 {{ else if eq .chezmoi.hostname "ZDEW-64185" }}
 hash -d z=/c/zivid/zivid-sdk
 {{ end }}
