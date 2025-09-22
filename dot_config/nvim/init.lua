@@ -97,33 +97,6 @@ n("'", '`')
 n('`', "'")
 n('<leader>q', 'gqap')
 
-local tb = require('telescope.builtin')
-
-local is_inside_work_tree = {}
-
-local function project_files(opts)
-  opts = opts or {} -- define here if you want to define something
-
-  local cwd = vim.fn.getcwd()
-  if is_inside_work_tree[cwd] == nil then
-    vim.fn.system("git rev-parse --is-inside-work-tree")
-    is_inside_work_tree[cwd] = vim.v.shell_error == 0
-  end
-
-  if is_inside_work_tree[cwd] then
-    tb.git_files(opts)
-  else
-    tb.find_files(opts)
-  end
-end
-
-n('<C-P>', project_files)
-n('<Leader><C-P>', function() project_files({ default_text = vim.fn.expand("<cword>")}) end)
-n('<Leader>.<C-P>', function() tb.find_files({ cwd = vim.fn.expand("%:p:h")}) end)
-n('Q', tb.buffers)
-n('<Leader>f', function() tb.grep_string({ word_match = "-w" }) end)
-n('<Leader>F', tb.live_grep)
-
 -- Autocmds
 
 local function map_q(ev)
