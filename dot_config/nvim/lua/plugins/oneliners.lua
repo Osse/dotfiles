@@ -13,6 +13,6 @@ return {
     'fladson/vim-kitty',
     'nvim-treesitter/nvim-treesitter-textobjects',
     'tikhomirov/vim-glsl',
-    'sam4llis/telescope-arglist.nvim',
+    -- 'sam4llis/telescope-arglist.nvim',
     'sindrets/diffview.nvim',
 }
