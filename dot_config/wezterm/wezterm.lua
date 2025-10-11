@@ -69,15 +69,21 @@ for key, dir in pairs({ w = "Up", a = "Left", s = "Down", d = "Right" }) do
 end
 
 bind({
+    key = 't',
+    mods = 'LEADER',
+    action = act.SpawnTab('DefaultDomain')
+})
+
+bind({
     key = "Enter",
     mods = "CTRL|SHIFT",
     action = wezterm.action_callback(function(_, pane)
         local dims = pane:get_dimensions()
         local fraction = dims.cols / dims.viewport_rows
         if fraction > 3 then
-            pane:split{ direction = "Right" }
+            pane:split{ direction = "Right", domain = "CurrentPaneDomain" }
         else
-            pane:split{ direction = "Bottom" }
+            pane:split{ direction = "Bottom", domain = "CurrentPaneDomain" }
         end
     end)
 })
