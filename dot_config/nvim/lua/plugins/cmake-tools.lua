@@ -25,12 +25,11 @@ return {
                     local cm = require('cmake-tools')
                     task.name = "Build " .. (cm.get_build_target() or "default")
                     on_new_task(task)
-                end
+                end,
+                new_task_opts = {
+                    components = { { "on_output_quickfix", open = false, open_on_exit = "failure" }, "default" },
+                }
             },
-            new_task_opts = {
-                components = { "!kek" }
-                -- components = { { "on_complete_notify", system = "always" }, { "on_output_quickfix", open = true }, "default" },
-            }
         },
         cmake_runner = {
             name = "overseer",
