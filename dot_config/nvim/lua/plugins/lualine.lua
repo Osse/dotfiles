@@ -32,6 +32,14 @@ return {
                 }
             },
             lualine_x = { code_context }
+        },
+        inactive_sections = {
+            lualine_c = {
+                {
+                    'filename',
+                    path = 1
+                }
+            },
         }
     }
 }
