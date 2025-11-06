@@ -143,15 +143,41 @@ function tab_title(tab_info)
   return tab_info.active_pane.title
 end
 
+local tab_bg_colors = {
+    ["local"] = {
+        [true] = wezterm.color.parse('black'),
+        [false] = wezterm.color.parse('#333333')
+    },
+    ["unix"] = {
+        [true] = wezterm.color.parse('#33520B'),
+        [false] = wezterm.color.parse('#33520B'):desaturate(0.5)
+    },
+    ["unixwork"] = {
+        [true] = wezterm.color.parse('#8E3B46'),
+        [false] = wezterm.color.parse('#8E3B46'):desaturate(0.5)
+    },
+}
+
+local tab_fg_colors = {
+    [true] = wezterm.color.parse('#c0c0c0'),
+    [false] = wezterm.color.parse('#808080')
+}
+
 wezterm.on(
   'format-tab-title',
   function(tab, tabs, panes, config, hover, max_width)
     local title = tab_title(tab)
     local pane = tab.active_pane
-    if pane.domain_name and pane.domain_name ~= "local" then
-        title = title .. " (" .. pane.domain_name .. ")"
-    end
-    return title
+    local bg_color = tab_bg_colors[pane.domain_name][tab.is_active]
+    local fg_color = tab_fg_colors[tab.is_active]
+
+    local format = {
+        { Background = { Color = bg_color } },
+        { Foreground = { Color = fg_color } },
+        { Text = title },
+        { Text = " (" .. pane.domain_name .. ")" },
+    }
+    return format
   end
 )
 
