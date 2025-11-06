@@ -41,18 +41,13 @@ config.colors = {
 config.bold_brightens_ansi_colors = false
 
 -- Same as tmux but allow tmux
-config.leader = { key = 'b', mods = 'CTRL|SHIFT', timeout_milliseconds = 1000 }
+-- Uppercase B and no 'SHIFT' in mods works
+config.leader = { key = 'B', mods = 'CTRL', timeout_milliseconds = 1000 }
 
 config.keys = {}
 local function bind(k)
     table.insert(config.keys, k)
 end
-
-bind({
-    key = 'a',
-    mods = 'LEADER',
-    action = act.AttachDomain('unix'),
-})
 
 bind({
     key = 'd',
@@ -99,19 +94,6 @@ config.mouse_bindings = {
     mods = 'NONE',
   },
 }
-
-table.insert(config.keys, {
-    key = 'a',
-    mods = 'LEADER',
-    action = act.AttachDomain 'unix',
-  }
-)
-
-table.insert(config.keys, {
-    key = 'd',
-    mods = 'LEADER',
-    action = act.DetachDomain { DomainName = 'unix' },
-})
 
 config.ssh_domains = {
     {
