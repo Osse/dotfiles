@@ -122,8 +122,8 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
         vim.cmd("cwindow")
     end
 })
-
-vim.lsp.enable({'clangd', 'lua-language-server', 'pylsp', 'rust-analyzer'})
+vim.lsp.enable({'clangd', 'rust-analyzer', 'ty'})
+vim.lsp.log.set_level("off")
 
 local current_rename_handler = vim.lsp.handlers['textDocument/rename']
 vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
@@ -162,7 +162,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end, opts)
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
         vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
         vim.keymap.set('n', '<leader>=', vim.lsp.buf.format, opts)
 
         if client.name == "clangd" then
@@ -201,6 +200,25 @@ vim.api.nvim_create_autocmd('LspAttach', {
                     })
                 end, ev.buf)
             end, {})
+
+            local function on_list(list)
+                table.sort(list.items, function(lhs, rhs)
+                    local lhs_fn = lhs.filename:gsub("/include/.*/", "/", 1)
+                    local rhs_fn = rhs.filename:gsub("/include/.*/", "/", 2)
+                    if lhs_fn ~= lhs.filename then
+                         vim.print(lhs.filename)
+                         vim.print(lhs_fn)
+                    end
+                    return lhs_fn < rhs_fn
+                end)
+                vim.fn.setqflist({}, ' ', list)
+                vim.cmd('botright copen')
+            end
+
+            local function sorted_references()
+                return vim.lsp.buf.references(nil, { on_list = on_list })
+            end
+            vim.keymap.set('n', 'grr', sorted_references, {})
         end
     end
 })
