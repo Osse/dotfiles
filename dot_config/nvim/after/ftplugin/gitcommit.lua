@@ -31,7 +31,7 @@ local function get_changed_files()
     return files
 end
 
-local function insert_stuff(content)
+local function insert_content(content)
     if content then
         local is_insert_mode = vim.api.nvim_get_mode().mode:sub(1,1) == "i"
         vim.schedule(function()
@@ -44,29 +44,44 @@ local function insert_stuff(content)
     end
 end
 
-local function insert_reference()
+local function telescope_git_commits(cb)
+    require "telescope.builtin".git_commits({
+        attach_mappings = function(prompt_bufnr, _)
+            local actions = require "telescope.actions"
+            actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+                local action_state = require "telescope.actions.state"
+                local selection = action_state.get_selected_entry()
+                cb(selection.value)
+                local ref = get_reference(selection.value)
+                insert_content(ref)
+            end)
+            return true
+        end
+    })
+end
+
+local function fzf_lua_git_commits(cb)
     require('fzf-lua').git_commits({
         actions = {
-            ["default"] = function(selected, opts)
-                local ref = get_reference(selected)
-                insert_stuff(ref)
+            ["default"] = function(selected, _opts)
+                cb(selected[1]:gsub("[^0-9a-f].*", ""))
             end
         }
     })
+end
 
-    -- require "telescope.builtin".git_commits({
-    --     attach_mappings = function(prompt_bufnr, _)
-    --         local actions = require "telescope.actions"
-    --         actions.select_default:replace(function()
-    --             actions.close(prompt_bufnr)
-    --             local action_state = require "telescope.actions.state"
-    --             local selection = action_state.get_selected_entry()
-    --             local ref = get_reference(selection.value)
-    --             insert_stuff(ref)
-    --         end)
-    --         return true
-    --     end
-    -- })
+local function insert_reference()
+    local function cb(selected)
+        vim.print("insert_reference: " .. selected)
+        insert_content(get_reference(selected))
+    end
+
+    if 1 == 1 then
+        fzf_lua_git_commits(cb)
+    else
+        telescope_git_commits(cb)
+    end
 end
 
 local function find_prefix()
@@ -76,29 +91,15 @@ local function find_prefix()
         table.insert(git_command, 2, "--follow")
     end
 
-    require('fzf-lua').git_commits({
-        actions = {
-            ["default"] = function(selected, opts)
-                local prefix = get_prefix(selected)
-                insert_stuff(prefix)
-            end
-        }
-    })
+    local function cb(selected)
+        insert_content(get_prefix(selected))
+    end
 
-    -- require "telescope.builtin".git_commits({
-    --     git_command = git_command,
-    --     attach_mappings = function(prompt_bufnr, _)
-    --         local actions = require "telescope.actions"
-    --         actions.select_default:replace(function()
-    --             actions.close(prompt_bufnr)
-    --             local action_state = require "telescope.actions.state"
-    --             local selection = action_state.get_selected_entry()
-    --             local prefix = get_prefix(selection.value)
-    --             insert_stuff(prefix)
-    --         end)
-    --         return true
-    --     end
-    -- })
+    if 1 == 1 then
+        fzf_lua_git_commits(cb)
+    else
+        telescope_git_commits(cb)
+    end
 end
 
 vim.keymap.set({'n', 'i'}, '<C-R>', insert_reference)
