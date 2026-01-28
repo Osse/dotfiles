@@ -1,8 +1,8 @@
 return {
     'tpope/vim-surround',
     'godlygeek/tabular',
-    'SirVer/ultisnips',
-    'honza/vim-snippets',
+    -- 'SirVer/ultisnips',
+    -- 'honza/vim-snippets',
     'tpope/vim-repeat',
     'tpope/vim-fugitive',
     'Osse/double-tap',
@@ -10,9 +10,8 @@ return {
     'richq/vim-cmake-completion',
     'PotatoesMaster/i3-vim-syntax',
     'PProvost/vim-ps1',
-    'fladson/vim-kitty',
-    'nvim-treesitter/nvim-treesitter-textobjects',
     'tikhomirov/vim-glsl',
     -- 'sam4llis/telescope-arglist.nvim',
     'sindrets/diffview.nvim',
+    'yochem/jq-playground.nvim',
 }
