@@ -151,7 +151,7 @@ wezterm.on(
   function(tab, tabs, panes, config, hover, max_width)
     local title = tab_title(tab)
     local pane = tab.active_pane
-    local bg_color = tab_bg_colors[pane.domain_name][tab.is_active]
+    local bg_color = (tab_bg_colors[pane.domain_name] or tab_bg_colors["local"])[tab.is_active]
     local fg_color = tab_fg_colors[tab.is_active]
 
     local format = {
