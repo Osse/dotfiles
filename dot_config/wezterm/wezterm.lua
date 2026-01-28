@@ -3,7 +3,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.font = wezterm.font('Deja Vu Sans Mono')
-config.font_size = 11.5
+config.font_size = 10.5
 config.freetype_load_target = "Light"
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
@@ -43,6 +43,7 @@ config.bold_brightens_ansi_colors = false
 -- Same as tmux but allow tmux
 -- Uppercase B and no 'SHIFT' in mods works
 config.leader = { key = 'B', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.window_decorations = "RESIZE | INTEGRATED_BUTTONS"
 
 config.keys = {}
 local function bind(k)
@@ -66,7 +67,7 @@ end
 bind({
     key = 't',
     mods = 'LEADER',
-    action = act.SpawnTab('DefaultDomain')
+    action = act.SpawnTab({ DomainName = 'local'})
 })
 
 bind({
