@@ -1,19 +1,19 @@
 local function on_new_task(task)
     local o = require("overseer")
 
-    task:subscribe("on_complete", function(_, result)
-        if result == "SUCCESS" then
+    task:subscribe("on_complete", function(t, result)
+        if result == "SUCCESS" or result == "CANCELED" then
             o.close()
             vim.cmd("cclose")
         end
     end)
 
+    vim.cmd("cclose")
     o.open( { enter = false, focus_task_id = task.id })
 end
 
 return {
-    'Osse/cmake-tools.nvim',
-    branch = "all-fixes",
+    'Civitasv/cmake-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
         cmake_generate_options = {},
@@ -23,11 +23,15 @@ return {
             opts = {
                 on_new_task = function(task)
                     local cm = require('cmake-tools')
-                    task.name = "Build " .. (cm.get_build_target() or "default")
+                    if task.name:find("--build") then
+                        task.name = "Build " .. (cm.get_build_target()[1] or "default")
+                    end
                     on_new_task(task)
                 end,
                 new_task_opts = {
-                    components = { { "on_output_quickfix", open = false, open_on_exit = "failure" }, "default" },
+                    strategy = {
+                        "jobstart"
+                    },
                 }
             },
         },
@@ -36,9 +40,15 @@ return {
             opts = {
                 on_new_task = function(task)
                     local cm = require('cmake-tools')
-                    task.name = "Run " .. (cm.get_build_target() or "default") .. " " .. table.concat(cm.get_launch_args(), " ")
+                    task.name = "Run " .. (cm.get_build_target()[1] or "default") .. " " .. table.concat(cm.get_launch_args(), " ")
+                    task.cwd = vim.fn.getcwd()
                     on_new_task(task)
-                end
+                end,
+                new_task_opts = {
+                    strategy = {
+                        "jobstart"
+                    },
+                }
             },
         },
         cmake_virtual_text_support = false,
