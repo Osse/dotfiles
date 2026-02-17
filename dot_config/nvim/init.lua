@@ -219,6 +219,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 return vim.lsp.buf.references(nil, { on_list = on_list })
             end
             vim.keymap.set('n', 'grr', sorted_references, {})
+
+            if not client.root_dir then
+                vim.diagnostic.enable(false)
+            end
         end
     end
 })
