@@ -14,7 +14,7 @@ ls --color $files
 
 print_help() {
     print -P '%B'
-    print -c 'v: Vim' 'l: less' 'h: head' 'c: cat' \
+    print -c 'v: Vim' 'l: less' 'h: head' 'c: cat' 'f: file' \
         "n: no/next (don't delete)" '[yd]: yes/delete' \
         'D: delete all' 'q: quit' 'Q: quit and delete selected' '?: Show help'
     print -P '%b'
@@ -36,6 +36,7 @@ for f in $files; do
             l) less -- $f                 ;;
             h) head -- $f                 ;;
             c) cat -- $f                  ;;
+            f) file -- $f                 ;;
             [yd]) nukes+=($f); break      ;;
             D) nukes=( $files ); break 2  ;;
             n) break                      ;;
