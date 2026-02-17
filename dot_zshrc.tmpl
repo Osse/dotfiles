@@ -356,6 +356,17 @@ for d in $HOME/dev/zivid-sdk-*; do
     hash -d z$match[1]=$d
 done
 
+activate () {
+    pushd $1
+    if ! [[ -d .venv ]]
+    then
+       uv venv || return
+    fi
+    uv sync || return
+    source .venv/bin/activate
+    popd
+}
+
 {{ else if eq .chezmoi.hostname "ZDEW-64185" }}
 hash -d z=/c/zivid/zivid-sdk
 {{ end }}
