@@ -44,6 +44,13 @@ config.bold_brightens_ansi_colors = false
 -- Uppercase B and no 'SHIFT' in mods works
 config.leader = { key = 'B', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.window_decorations = "RESIZE | INTEGRATED_BUTTONS"
+config.quick_select_patterns = {
+  -- Overrides the default pattern by explicitly capturing the a/ and b/
+   -- diff_a
+   "--- (a/\\S+)",
+   -- diff_b
+   "\\+\\+\\+ (b/\\S+)",
+}
 
 config.keys = {}
 local function bind(k)
