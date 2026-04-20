@@ -55,6 +55,7 @@ vim.opt.scrolloff = 5
 vim.opt.undofile = true
 vim.opt.switchbuf = "useopen,uselast"
 vim.opt.exrc = true
+vim.opt.winborder = "rounded"
 
 local function n(lhs, rhs)
     vim.keymap.set('n', lhs, rhs, {})
@@ -89,7 +90,7 @@ n('<Esc>O5A', '<C-W><Up>')
 n('<F1>', ':he ')
 n('<F2>', ':set invnumber number?<CR>')
 n('<F3>', ':set invrelativenumber relativenumber?<CR>')
-n('<F7>', ':set invwrap wrap?<CR>')
+-- n('<F7>', ':set invwrap wrap?<CR>')
 n('<silent>', '<F9> :wall <Bar> make<CR><CR><CR>:botright cwindow<CR>')
 -- }}}
 n('<C-W>]', ':vsplit<CR>:tag<CR>')
@@ -251,7 +252,7 @@ local function debug_setup()
                 return cmake.get_launch_target_path()
             end,
             args = function()
-                cmake.get_launch_args()
+                return cmake.get_launch_args()
             end,
             cwd = "${workspaceFolder}",
             stopAtBeginningOfMainSubprogram = true,
@@ -263,28 +264,25 @@ local function debug_setup()
     local dap_mappings = {
         ['<F5>'] = dap.continue,
         ['<S-F5>'] = dap.terminate,
+        ['<F17>'] = dap.terminate,
+        ['<F7>'] = dap.repl.toggle,
+        ['<F9>'] = dap.toggle_breakpoint,
         ['<F10>'] = dap.step_over,
         ['<F11>'] = dap.step_into,
         ['<S-F11>'] = dap.step_out,
-        ['<F6>'] = dap.toggle_breakpoint,
+        ['<F23>'] = dap.step_out,
     }
 
     dap.listeners.on_session["myconfig"] = function(old, new)
-
         local dap = require('dap')
         if new then
             map_cache = vim.iter(vim.api.nvim_get_keymap('n')):filter(function(mapping)
                 return vim.iter(dap_mappings):any(function(key, _) return key == mapping.lhs end)
             end):totable()
 
-            vim.keymap.set('n', '<F5>', dap.continue)
-            vim.keymap.set('n', '<S-F5>', dap.terminate)
-            vim.keymap.set('n', '<F17>', dap.terminate)
-            vim.keymap.set('n', '<F10>', dap.step_over)
-            vim.keymap.set('n', '<F11>', dap.step_into)
-            vim.keymap.set('n', '<S-F11>', dap.step_out)
-            vim.keymap.set('n', '<F23>', dap.step_out)
-            vim.keymap.set('n', '<F9>', dap.toggle_breakpoint)
+            for k,v in pairs(dap_mappings) do
+                vim.keymap.set('n', k, v);
+            end
         else
             for k,v in pairs(map_cache) do
                 vim.fn.mapset(v)
