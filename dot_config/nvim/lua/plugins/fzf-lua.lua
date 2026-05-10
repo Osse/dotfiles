@@ -21,7 +21,14 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     -- or if using mini.icons/mini.nvim
     -- dependencies = { "echasnovski/mini.icons" },
-    opts = { 'telescope' },
+    opts = {
+        'telescope',
+        keymap = {
+            fzf = {
+                ['ctrl-u'] = 'unix-line-discard',
+            },
+        },
+    },
     keys = {
         { "<leader>F", '<cmd>FzfLua live_grep<cr>', desc = "Live grep" },
         { 'Q', '<cmd>FzfLua buffers<CR>', desc = "Switch buffers" },
