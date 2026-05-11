@@ -12,6 +12,11 @@ local function on_new_task(task)
     o.open( { enter = false, focus_task_id = task.id })
 end
 
+local function get_launch_args()
+    local args = require('cmake-tools').get_launch_args()
+    vim.print(args)
+end
+
 return {
     'Civitasv/cmake-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -71,5 +76,13 @@ return {
                 vim.keymap.set('n', '<S-F6>', function() cm.stop_executor({}) end)
             end
         })
+        vim.api.nvim_create_user_command(
+            "CMakeGetLaunchArgs",
+            get_launch_args,
+            { -- opts
+                nargs = 0,
+                desc = "CMake Get Launch args",
+            }
+        )
     end
 }
