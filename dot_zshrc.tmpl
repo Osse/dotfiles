@@ -351,20 +351,21 @@ VIRTUAL_ENV_DISABLE_PROMPT=1
 hash -d z=$HOME/dev/zivid-sdk
 hash -d b=$HOME/dev/zivid-sdk/sdk/build
 
-for d in $HOME/dev/zivid-sdk-*; do
+for d in $HOME/dev/zivid-sdk-*(N); do
     [[ $d = (#b)*-(*) ]]
     hash -d z$match[1]=$d
 done
 
 activate () {
-    pushd $1
+    pushd $1 || return
+    trap popd EXIT
     if ! [[ -d .venv ]]
     then
        uv venv || return
     fi
     uv sync || return
     source .venv/bin/activate
-    popd
+    declare -p VIRTUAL_ENV
 }
 
 {{ else if eq .chezmoi.hostname "ZDEW-64185" }}
