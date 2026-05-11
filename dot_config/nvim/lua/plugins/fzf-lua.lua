@@ -21,9 +21,18 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     -- or if using mini.icons/mini.nvim
     -- dependencies = { "echasnovski/mini.icons" },
-    opts = { 'telescope' },
+    opts = {
+        'telescope',
+        keymap = {
+            fzf = {
+                ['ctrl-u'] = 'unix-line-discard',
+            },
+        },
+    },
     keys = {
         { "<leader>F", '<cmd>FzfLua live_grep<cr>', desc = "Live grep" },
+        { "<leader>G", function() require('fzf-lua').live_grep({ search_paths = vim.fn.systemlist('git ls-files') }) end, desc = "Live grep committed files" },
+        { "<leader>B", function() require('fzf-lua').live_grep({ search_paths = { tostring(require('cmake-tools').get_build_directory()) } }) end, desc = "Live grep in build directory" },
         { 'Q', '<cmd>FzfLua buffers<CR>', desc = "Switch buffers" },
         { "<Leader>f", '<cmd>FzfLua grep_cword<cr>', desc = "grep string" },
         { '<C-P>', function() project_files({ cwd = vim.fn.getcwd() }) end, desc = "project files under current directory" },
