@@ -140,6 +140,40 @@ vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
   )
 end
 
+local function goto_in_right_win(lsp_fn)
+    return function()
+        local cur_win = vim.api.nvim_get_current_win()
+        local cur_col = vim.api.nvim_win_get_position(cur_win)[2]
+        local right_win = nil
+        for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if w ~= cur_win then
+                local col = vim.api.nvim_win_get_position(w)[2]
+                if col > cur_col and (right_win == nil or col < vim.api.nvim_win_get_position(right_win)[2]) then
+                    right_win = w
+                end
+            end
+        end
+        if not right_win then
+            lsp_fn()
+            return
+        end
+        lsp_fn({
+            on_list = function(list)
+                if #list.items == 1 then
+                    local item = list.items[1]
+                    vim.api.nvim_set_current_win(right_win)
+                    vim.cmd('normal! m\'')
+                    vim.cmd('edit ' .. vim.fn.fnameescape(item.filename))
+                    vim.api.nvim_win_set_cursor(0, {item.lnum, math.max(0, (item.col or 1) - 1)})
+                else
+                    vim.fn.setqflist({}, ' ', list)
+                    vim.cmd('botright copen')
+                end
+            end
+        })
+    end
+end
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
@@ -148,8 +182,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local opts = { buffer = ev.buf }
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'gD', goto_in_right_win(vim.lsp.buf.declaration), opts)
+        vim.keymap.set('n', 'gd', goto_in_right_win(vim.lsp.buf.definition), opts)
         vim.keymap.set('n', '<leader>gd', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
