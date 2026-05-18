@@ -50,7 +50,7 @@ return {
             opts = {
                 on_new_task = function(task)
                     local cm = require('cmake-tools')
-                    task.name = "Run " .. (cm.get_build_target()[1] or "default") .. " " .. table.concat(cm.get_launch_args(), " ")
+                    task.name = "Run " .. (cm.get_launch_target() or "default") .. " " .. table.concat(cm.get_launch_args(), " ")
                     task.cwd = vim.fn.getcwd()
                     on_new_task(task)
                 end,
