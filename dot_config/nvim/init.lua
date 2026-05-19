@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
         vim.cmd("cwindow")
     end
 })
-vim.lsp.enable({'clangd', 'rust-analyzer', 'ty'})
+vim.lsp.enable({'clangd', 'lua-language-server', 'rust-analyzer', 'ty'})
 vim.lsp.log.set_level("off")
 
 local current_rename_handler = vim.lsp.handlers['textDocument/rename']
