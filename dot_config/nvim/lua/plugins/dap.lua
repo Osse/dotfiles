@@ -45,6 +45,7 @@ return {
             }
 
             dap.listeners.after.event_initialized["myconfig"] = function()
+                vim.cmd('DapViewOpen')
                 local map_index = {}
                 for _, m in ipairs(vim.api.nvim_get_keymap('n')) do
                     map_index[m.lhs] = m
