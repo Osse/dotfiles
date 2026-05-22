@@ -10,9 +10,13 @@ return {
             dap.adapters.lldb = {
                 type = "executable",
                 command = "lldb-dap-21",
-                name = "lldb",
             }
 
+            dap.adapters.gdb = {
+                type = "executable",
+                command = "gdb",
+                args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+            }
             dap.configurations.cpp = {
                 {
                     name = "Launch current CMake launch target",

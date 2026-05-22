@@ -119,6 +119,9 @@ return {
             },
         },
         cmake_virtual_text_support = false,
+        cmake_dap_configuration = {
+            type = "gdb",
+        }
     },
     init = function()
         vim.api.nvim_create_autocmd("User", {
