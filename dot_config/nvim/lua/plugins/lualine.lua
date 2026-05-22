@@ -17,6 +17,19 @@ local function code_context()
     return require("nvim-treesitter").statusline(opts)
 end
 
+local function dap_status()
+    return require('dap').status()
+end
+
+local function is_debugging()
+    return dap_status() ~= ''
+end
+
+local function is_not_debugging()
+    return not is_debugging()
+end
+
+
 return {
     'nvim-lualine/lualine.nvim',
     opts = {
@@ -25,6 +38,12 @@ return {
         },
         extensions = { 'overseer', 'quickfix' },
         sections = {
+            lualine_b = {
+                { 'branch' },
+                { 'diff', cond = is_not_debugging },
+                { 'diagnostics', cond = is_not_debugging },
+                { dap_status, cond = is_debugging }
+            },
             lualine_c = {
                 {
                     'filename',
