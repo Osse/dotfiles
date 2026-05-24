@@ -31,6 +31,7 @@ return {
     },
     keys = {
         { "<leader>F", '<cmd>FzfLua live_grep<cr>', desc = "Live grep" },
+        { "<leader>gb", '<cmd>FzfLua git_branches<cr>', desc = "Git branches" },
         { "<leader>G", function() require('fzf-lua').live_grep({ search_paths = vim.fn.systemlist('git ls-files') }) end, desc = "Live grep committed files" },
         { "<leader>B", function() require('fzf-lua').live_grep({ search_paths = { tostring(require('cmake-tools').get_build_directory()) } }) end, desc = "Live grep in build directory" },
         { 'Q', '<cmd>FzfLua buffers<CR>', desc = "Switch buffers" },
