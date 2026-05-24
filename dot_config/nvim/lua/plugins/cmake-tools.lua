@@ -126,7 +126,7 @@ return {
     init = function()
         vim.api.nvim_create_autocmd("User", {
             pattern = "CMakeToolsEnterProject",
-            group = vim.api.nvim_create_augroup("minvimrc", { clear = true }),
+            group = vim.api.nvim_create_augroup("cmake-tools-user", { clear = true }),
             callback = function(_)
                 local cm = require('cmake-tools')
                 vim.keymap.set('n', '<F4>', select_and_sync_build_target)

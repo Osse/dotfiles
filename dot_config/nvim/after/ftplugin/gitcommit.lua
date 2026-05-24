@@ -18,7 +18,6 @@ local function get_changed_files()
     if output == nil or output == '' then
         local cmd2 = vim.system({"git", "diff", "--name-only", "HEAD~", "HEAD"}, { text = true })
         output = cmd2:wait().stdout
-        vim.print(output)
     end
     local files = {}
     if output == nil or output == '' then
@@ -27,7 +26,6 @@ local function get_changed_files()
     for s in output:gmatch("[^\r\n]+") do
         table.insert(files, s)
     end
-    vim.print(files)
     return files
 end
 
@@ -73,7 +71,6 @@ end
 
 local function insert_reference()
     local function cb(selected)
-        vim.print("insert_reference: " .. selected)
         insert_content(get_reference(selected))
     end
 

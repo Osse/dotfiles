@@ -239,11 +239,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             local function on_list(list)
                 table.sort(list.items, function(lhs, rhs)
                     local lhs_fn = lhs.filename:gsub("/include/.*/", "/", 1)
-                    local rhs_fn = rhs.filename:gsub("/include/.*/", "/", 2)
-                    if lhs_fn ~= lhs.filename then
-                         vim.print(lhs.filename)
-                         vim.print(lhs_fn)
-                    end
+                    local rhs_fn = rhs.filename:gsub("/include/.*/", "/", 1)
                     return lhs_fn < rhs_fn
                 end)
                 vim.fn.setqflist({}, ' ', list)
