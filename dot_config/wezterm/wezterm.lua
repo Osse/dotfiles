@@ -106,7 +106,7 @@ config.mouse_bindings = {
 config.ssh_domains = {
     {
         name = 'work-desktop',
-        remote_address = 'work-deskop',
+        remote_address = 'work-desktop',
     },
 }
 
