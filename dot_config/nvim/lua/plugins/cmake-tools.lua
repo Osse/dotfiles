@@ -121,6 +121,10 @@ return {
         cmake_virtual_text_support = false,
         cmake_dap_configuration = {
             type = "gdb",
+            name = function()
+                local cm = require('cmake-tools')
+                return (cm.get_launch_target() or "default") .. " " .. table.concat(cm.get_launch_args(), " ")
+            end
         }
     },
     init = function()
