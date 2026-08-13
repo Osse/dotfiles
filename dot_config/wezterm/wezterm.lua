@@ -116,7 +116,7 @@ config.unix_domains = {
     },
     {
         name = 'unixwork',
-        proxy_command = { "ssh", "-T", "work-desktop", "wezterm", "cli", "proxy" },
+        proxy_command = { "ssh", "-T", "work-desktop", "source .profile && wezterm cli proxy" },
     },
 }
 
